@@ -3,6 +3,15 @@ import sys
 import parser as parser
 import visualization as visualization
 
+"""
+SAMPLE IMPLEMENTATION, dont need to follow but helps me keep track of which types of functions will likely exist where
+main()
+load_data()
+game_loop()
+handle_keyboard(event)
+handle_mouse(event)
+set_mode(mode)
+"""
 h, initial_segments = parser.parse("input.txt")
 
 screen = visualization.create_window(2**h, "Quadtree Visualization")

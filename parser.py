@@ -1,3 +1,13 @@
+"""
+SAMPLE IMPLEMENTATION, dont need to follow but helps me keep track of which types of functions will likely exist where
+
+
+read_input(file_path)
+
+"""
+
+
+
 def parse(file_path):
     """
     Parses the input file and returns a list of segments.
