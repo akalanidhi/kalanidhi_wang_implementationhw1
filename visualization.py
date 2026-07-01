@@ -26,6 +26,11 @@ def create_window(h: int, title: str = "Pygame Window"):
         The Pygame display surface.
     """
     pygame.init()
+    if (title == "Error screen"):
+        screen = pygame.display.set_mode((300,100))
+        pygame.display.set_caption(title)
+        
+        return screen
 
     screen = pygame.display.set_mode((h, h))
     pygame.display.set_caption(title)
