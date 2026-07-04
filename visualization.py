@@ -93,8 +93,7 @@ def draw_status(screen, mode, animation, nodes, segments):
         f"Mode: {mode}    "
         f"Animation: {animation_text}    "
         f"Nodes: {nodes}    "
-        f"Segments: {segments}"
-    )
+        f"Segments: {segments}")
 
     text = font.render(status, True, (0, 0, 0))
 

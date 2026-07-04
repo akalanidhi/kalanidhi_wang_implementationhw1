@@ -48,6 +48,9 @@ class GameState:
         self.query_rect = None
 
         self.error_message = ""
+        
+        self.insert_start = None
+
 
 
 
@@ -125,13 +128,32 @@ def handle_mouse(event, state):
 
     if state.mode == Mode.INSERT:
 
-        segment = geometry.Segment(
-            x,
-            x,
-            y
-        )
+        # First click
+        if state.insert_start is None:
 
-        state.tree.insert(segment)
+            state.insert_start = geometry.Point(x, y)
+
+            print(f"Start point selected: ({x}, {y})")
+
+        # Second click
+        else:
+
+            start = state.insert_start
+
+            x1 = min(start.x, x)
+            x2 = max(start.x, x)
+
+            segment = geometry.Segment(
+                x1,
+                x2,
+                start.y
+            )
+
+            state.tree.insert(segment)
+
+            print(f"Inserted segment ({x1}, {x2}, {start.y})")
+
+            state.insert_start = None
 
 
     elif state.mode == Mode.REPORT:

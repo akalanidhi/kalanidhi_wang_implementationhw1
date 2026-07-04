@@ -23,7 +23,7 @@ quadTree
 members:
     root
     node_count
-    segment_count
+    endpoint_count
     max_segments = 3
 
 
