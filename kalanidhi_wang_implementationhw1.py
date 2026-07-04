@@ -92,6 +92,7 @@ global command
 command = ""  # Initialize command variable
 
 def handle_keyboard(event, state):
+    """
     global command
     command += event.key.name
     if event.key == pygame.K_RETURN:
@@ -108,6 +109,7 @@ def handle_keyboard(event, state):
             print("COUNT MODE")
         command = ""  # Reset command after processing
         return cmd_str
+    """
     if event.key == pygame.K_ESCAPE:
         state.mode = Mode.NORMAL
     elif event.key == pygame.K_a:
