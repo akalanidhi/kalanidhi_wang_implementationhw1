@@ -264,3 +264,6 @@ class quadTree:
 
         for child in node.children:
             self._print(child)
+
+    def count_segments(self):
+        return self.segment_count
