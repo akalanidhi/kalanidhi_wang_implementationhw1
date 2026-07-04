@@ -8,6 +8,8 @@ handle_mouse(event)
 set_mode(mode)
 """
 
+from tkinter import font
+
 import pygame
 import sys
 from enum import Enum
@@ -91,11 +93,22 @@ def load_data(state):
 global command 
 command = ""  # Initialize command variable
 
-command = ""
-
 
 def handle_keyboard(event, state):
     global command
+
+    if event.key == pygame.K_i:
+        mode = Mode.INSERT
+        print("Switched to INSERT mode.")
+        state.mode = Mode.INSERT
+    if event.key == pygame.K_r:
+        mode = Mode.REPORT
+        print("Switched to REPORT mode.")
+        state.mode = Mode.REPORT
+    if event.key == pygame.K_c:
+        mode = Mode.COUNT
+        print("Switched to COUNT mode.")
+        state.mode = Mode.COUNT
     if event.key == pygame.K_RETURN:
 
         cmd = command.strip()
@@ -105,7 +118,11 @@ def handle_keyboard(event, state):
             return
 
         cmd_str = cmd.split()
-
+        for i in range(1, len(cmd_str)):
+            cmd_str[i] = cmd_str[i].strip()
+            if int(cmd_str[i]) < 0 or int(cmd_str[i]) > 2 ** state.h:
+                print("Error: Values are out of bounds.")
+                return
         try:
             if cmd_str[0].lower() == "i":
 
@@ -127,7 +144,6 @@ def handle_keyboard(event, state):
 
                 print(f"Inserted segment ({x1}, {x2}, {y})")
 
-            # ---------------- REPORT ----------------
             elif cmd_str[0].lower() == "r":
 
                 if len(cmd_str) != 5:
@@ -276,6 +292,7 @@ def draw(state):
             nodes=state.tree.count_nodes(),
             segments=state.tree.count_segments()
         )
+        visualization.draw_command(screen, command)
 
     pygame.display.flip()
 
