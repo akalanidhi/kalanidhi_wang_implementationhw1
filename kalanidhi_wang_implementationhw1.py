@@ -91,34 +91,91 @@ def load_data(state):
 global command 
 command = ""  # Initialize command variable
 
+command = ""
+
+
 def handle_keyboard(event, state):
-    """
     global command
-    command += event.key.name
     if event.key == pygame.K_RETURN:
-        cmd_str = command.split(" ")
-        if cmd_str[0] == "i":
-            state.mode = Mode.INSERT
-            print("INSERT MODE")
-        if cmd_str[0] == "r":
-            state.mode = Mode.REPORT
-            state.first_click = None
-            print("REPORT MODE")
-        elif cmd_str[0] == "c":
-            state.mode = Mode.COUNT
-            print("COUNT MODE")
-        command = ""  # Reset command after processing
-        return cmd_str
-    """
-    if event.key == pygame.K_ESCAPE:
+
+        cmd = command.strip()
+        command = ""
+
+        if cmd == "":
+            return
+
+        cmd_str = cmd.split()
+
+        try:
+            if cmd_str[0].lower() == "i":
+
+                if len(cmd_str) != 4:
+                    print("Usage: i x1 x2 y")
+                    return
+
+                x1 = int(cmd_str[1])
+                x2 = int(cmd_str[2])
+                y = int(cmd_str[3])
+
+                segment = geometry.Segment(
+                    min(x1, x2),
+                    max(x1, x2),
+                    y
+                )
+
+                state.tree.insert(segment)
+
+                print(f"Inserted segment ({x1}, {x2}, {y})")
+
+            # ---------------- REPORT ----------------
+            elif cmd_str[0].lower() == "r":
+
+                if len(cmd_str) != 5:
+                    print("Usage: r xmin ymin xmax ymax")
+                    return
+
+                xmin = int(cmd_str[1])
+                ymin = int(cmd_str[2])
+                xmax = int(cmd_str[3])
+                ymax = int(cmd_str[4])
+
+                state.query_rect = geometry.Rectangle(
+                    xmin,
+                    xmax,
+                    ymin,
+                    ymax
+                )
+
+                results = state.tree.query(state.query_rect)
+
+                print(f"Found {len(results)} segments.")
+            elif cmd_str[0].lower() == "c":
+
+                print("Nodes:", state.tree.count_nodes())
+                print("Segments:", state.tree.count_segments())
+
+            else:
+                print("Unknown command.")
+
+        except ValueError:
+            print("Invalid numeric input.")
+    elif event.key == pygame.K_BACKSPACE:
+
+        command = command[:-1]
+    elif event.key == pygame.K_ESCAPE:
+
         state.mode = Mode.NORMAL
     elif event.key == pygame.K_a:
 
-        state.anim.toggle_animation() 
+        state.anim.toggle_animation()
 
         print(
-            f"Animation: {'ON' if state.anim.animation_on else 'OFF'}"  # <-- changed
+            f"Animation: {'ON' if state.anim.animation_on else 'OFF'}"
         )
+    else:
+
+        if event.unicode.isprintable():
+            command += event.unicode
 
 def handle_mouse(event, state):
 
@@ -145,11 +202,7 @@ def handle_mouse(event, state):
             x1 = min(start.x, x)
             x2 = max(start.x, x)
 
-            segment = geometry.Segment(
-                x1,
-                x2,
-                start.y
-            )
+            segment = geometry.Segment( x1, x2, start.y)
 
             state.tree.insert(segment)
 
