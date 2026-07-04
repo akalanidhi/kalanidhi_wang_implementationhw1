@@ -27,6 +27,7 @@ class Mode(Enum):
     INSERT = 1
     REPORT = 2
     ERROR = 3
+    COUNT = 4
 
 class GameState:
 
@@ -79,12 +80,7 @@ def load_data(state):
     )
 
     # Root boundary
-    boundary = geometry.Rectangle(
-        0,
-        2 ** h,
-        0,
-        2 ** h
-    )
+    boundary = geometry.Rectangle(0,2 ** h,0,2 ** h)
 
     state.tree = quadtree.quadTree(boundary, anim=state.anim)
 
@@ -92,25 +88,28 @@ def load_data(state):
     for segment in initial_segments:
         state.tree.insert(segment)
 
-
+global command 
+command = ""  # Initialize command variable
 
 def handle_keyboard(event, state):
-
+    global command
+    command += event.key.name
+    if event.key == pygame.K_RETURN:
+        cmd_str = command.split(" ")
+        if cmd_str[0] == "i":
+            state.mode = Mode.INSERT
+            print("INSERT MODE")
+        if cmd_str[0] == "r":
+            state.mode = Mode.REPORT
+            state.first_click = None
+            print("REPORT MODE")
+        elif cmd_str[0] == "c":
+            state.mode = Mode.COUNT
+            print("COUNT MODE")
+        command = ""  # Reset command after processing
+        return cmd_str
     if event.key == pygame.K_ESCAPE:
-
         state.mode = Mode.NORMAL
-
-    elif event.key == pygame.K_i:
-
-        state.mode = Mode.INSERT
-        print("INSERT MODE")
-
-    elif event.key == pygame.K_r:
-
-        state.mode = Mode.REPORT
-        state.first_click = None
-        print("REPORT MODE")
-
     elif event.key == pygame.K_a:
 
         state.anim.toggle_animation() 
