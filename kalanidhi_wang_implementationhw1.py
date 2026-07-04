@@ -16,6 +16,7 @@ import parser
 import visualization
 import quadtree
 import geometry
+import animation 
 
 
 WHITE = (255, 255, 255)
@@ -34,7 +35,7 @@ class GameState:
         self.mode = Mode.NORMAL
 
         # animation starts ON
-        self.animation = True
+        self.anim = animation.AnimationManager(log_file_path="log.txt")
 
         self.running = True
 
@@ -85,7 +86,7 @@ def load_data(state):
         2 ** h
     )
 
-    state.tree = quadtree.quadTree(boundary)
+    state.tree = quadtree.quadTree(boundary, anim=state.anim)
 
     # Insert all segments from file
     for segment in initial_segments:
@@ -112,10 +113,10 @@ def handle_keyboard(event, state):
 
     elif event.key == pygame.K_a:
 
-        state.animation = not state.animation
+        state.anim.toggle_animation() 
 
         print(
-            f"Animation: {'ON' if state.animation else 'OFF'}"
+            f"Animation: {'ON' if state.anim.animation_on else 'OFF'}"  # <-- changed
         )
 
 def handle_mouse(event, state):
@@ -202,6 +203,8 @@ def draw(state):
         # Draw tree
         state.tree.draw(screen)
 
+        state.anim.draw_highlights(screen)
+
         # Draw query rectangle if one exists
         if state.query_rect is not None:
 
@@ -215,7 +218,7 @@ def draw(state):
         visualization.draw_status(
             screen,
             mode=state.mode.name,
-            animation=state.animation,
+            animation=state.anim.animation_on,
             nodes=state.tree.count_nodes(),
             segments=state.tree.count_segments()
         )
@@ -225,8 +228,7 @@ def draw(state):
 
 def update(state):
 
-    # Placeholder for animation later
-    pass
+    state.anim.update() 
 
 def game_loop(state):
 

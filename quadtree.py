@@ -54,10 +54,11 @@ class quadTree:
     represents the quadtree structure.
     manages insertion of segments, querying, and visualization.
     """
-    def __init__(self, boundary):
+    def __init__(self, boundary, anim=None):
         self.root = quadNode(boundary)   #root node of the quadtree
         self.max_segments = 3            #maximum segments a node can hold before splitting
         self.segment_count = 0                  #total number of segments in the quadtree
+        self.anim = anim
 
     def insert(self, segment):
         """
@@ -111,6 +112,12 @@ class quadTree:
         # Ignore segments completely outside this node
         if not node.boundary.int_segment(segment):
             return
+        
+        if self.anim:   # <-- add this
+            self.anim.print_and_highlight_quadrant(
+            node.boundary.x_min, node.boundary.y_min,
+            node.boundary.x_max, node.boundary.y_max
+        )
 
         # Leaf with room
         if node.is_leaf and len(node.segments) < self.max_segments:
@@ -167,6 +174,12 @@ class quadTree:
 
         if not node.boundary.int_rectangle(rectangle):
             return
+        
+        if self.anim:   # <-- add this
+            self.anim.print_and_highlight_quadrant(
+            node.boundary.x_min, node.boundary.y_min,
+            node.boundary.x_max, node.boundary.y_max
+        )
 
         for seg in node.segments:
 
@@ -241,10 +254,8 @@ class quadTree:
 
 
     def clear_highlights(self):
-        """
-        Placeholder for later animation.
-        """
-        pass
+        if self.anim:
+            self.anim._highlighted_quads.clear()
 
 
     def print_tree(self):
