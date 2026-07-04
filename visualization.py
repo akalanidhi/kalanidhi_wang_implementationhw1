@@ -124,3 +124,26 @@ def draw_error(screen, message):
 
     text_rect = text.get_rect(center=(width // 2, height // 2))
     screen.blit(text, text_rect)
+
+def draw_rectangle(screen, rectangle, color=(255, 0, 0), width=2):
+    """
+    Draw an outlined rectangle.
+
+    Args:
+        screen: Pygame display surface.
+        rectangle: geometry.Rectangle object.
+        color: RGB tuple.
+        width: Outline thickness (0 fills the rectangle).
+    """
+
+    x = rectangle.x_min
+    y = rectangle.y_min
+    rect_width = rectangle.x_max - rectangle.x_min
+    rect_height = rectangle.y_max - rectangle.y_min
+
+    pygame.draw.rect(
+        screen,
+        color,
+        pygame.Rect(x, y, rect_width, rect_height),
+        width
+    )
