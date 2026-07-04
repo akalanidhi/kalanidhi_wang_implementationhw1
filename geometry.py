@@ -25,6 +25,7 @@ draw(screen)t
 
 
 """
+import pygame
 
 class Point:
     """
@@ -91,7 +92,7 @@ class Segment:
         draws this segment on the given pygame screen.
         placeholder — to be implemented with pygame drawing logic.
         """
-        pass
+        pygame.draw.line(screen,(0,0,255), (self.x1, self.y), (self.x2, self.y), 2)
 
 class Rectangle:
     """
@@ -172,4 +173,5 @@ class Rectangle:
         draws this rectangle on the given pygame screen.
         placeholder — to be implemented with pygame drawing logic.
         """
-        pass
+        pygame.draw.rect(screen,
+        (0, 0, 0),pygame.Rect(self.x_min, self.y_min, self.x_max - self.x_min, self.y_max - self.y_min),1)
