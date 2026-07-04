@@ -57,13 +57,14 @@ class quadTree:
     def __init__(self, boundary):
         self.root = quadNode(boundary)   #root node of the quadtree
         self.max_segments = 3            #maximum segments a node can hold before splitting
+        self.segment_count = 0                  #total number of segments in the quadtree
 
     def insert(self, segment):
         """
         inserts a segment into quadtree.
         if node is not provided, insertion starts at the root.
         recursion is handled inside this function.
-        """
+        
         #start at root if no node provided
         if node is None:
             node = self.root
@@ -101,16 +102,165 @@ class quadTree:
             for child in node.children:
                 if child.boundary.int_segment(segment):
                     self.insert(segment, child)
+        """
+        self.segment_count += 1
+        self._insert(self.root, segment)
+
+    def _insert(self, node, segment):
+
+        # Ignore segments completely outside this node
+        if not node.boundary.int_segment(segment):
+            return
+
+        # Leaf with room
+        if node.is_leaf and len(node.segments) < self.max_segments:
+            node.segments.append(segment)
+            return
+
+        # Need to split
+        if node.is_leaf:
+            self.split(node)
+
+        # Insert into every intersecting child
+        inserted = False
+
+        for child in node.children:
+
+            if child.boundary.int_segment(segment):
+                self._insert(child, segment)
+                inserted = True
+
+        # Segment crosses multiple children
+        if not inserted:
+            node.segments.append(segment)
+
+    def split(self, node):
+
+        node.children = [
+            quadNode(node.boundary.get_quad(0), node.level + 1),
+            quadNode(node.boundary.get_quad(1), node.level + 1),
+            quadNode(node.boundary.get_quad(2), node.level + 1),
+            quadNode(node.boundary.get_quad(3), node.level + 1)
+        ]
+
+        node.is_leaf = False
+
+        old_segments = node.segments
+        node.segments = []
+
+        for seg in old_segments:
+            for child in node.children:
+                if child.boundary.int_segment(seg):
+                    self._insert(child, seg)
 
     def query(self, rectangle):
-        """Return all segments intersecting the rectangle."""
+        results = []
+
+        self._query(self.root, rectangle, results)
+
+        return results
+    
+    def _query(self, node, rectangle, results):
+
+        if node is None:
+            return
+
+        if not node.boundary.int_rectangle(rectangle):
+            return
+
+        for seg in node.segments:
+
+            if seg.int_rectangle(rectangle):
+                results.append(seg)
+
+        if not node.is_leaf:
+
+            for child in node.children:
+                self._query(child, rectangle, results)
 
     def report(self):
-        """Print information about the tree."""
+        #Print information about the tree.
         ...
 
     def count_nodes(self):
-        """Return the total number of nodes."""
+        return self._count_nodes(self.root)
+
+    def _count_nodes(self, node):
+
+        if node is None:
+            return 0
+
+        total = 1
+
+        for child in node.children:
+            total += self._count_nodes(child)
+
+        return total
 
     def draw(self, screen):
-        """Draw the entire quadtree."""
+        self._draw(screen, self.root)
+    
+    def _draw(self, screen, node):
+
+        if node is None:
+            return
+
+        node.boundary.draw(screen)
+
+        for seg in node.segments:
+            seg.draw(screen)
+
+        if not node.is_leaf:
+
+            for child in node.children:
+                self._draw(screen, child)
+
+
+    def find(self, point):
+        return self._find(self.root, point)
+
+    def _find(self, node, point):
+
+        if node is None:
+            return None
+
+        if not node.boundary.cont_point(point):
+            return None
+
+        if node.is_leaf:
+            return node
+
+        for child in node.children:
+
+            result = self._find(child, point)
+
+            if result is not None:
+                return result
+
+        return node
+
+
+    def clear_highlights(self):
+        """
+        Placeholder for later animation.
+        """
+        pass
+
+
+    def print_tree(self):
+        self._print(self.root)
+
+    def _print(self, node):
+
+        if node is None:
+            return
+
+        indent = "    " * node.level
+
+        print(
+            f"{indent}Level {node.level} | "
+            f"Segments: {len(node.segments)}"
+        )
+
+        for child in node.children:
+            self._print(child)

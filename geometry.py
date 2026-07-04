@@ -30,7 +30,7 @@ class Point:
     """
     represents a 2D point with x and y coordinates.
     used to represent endpoints of segments and locations in plane. 
-    plane defined with (0,0) at bottom left and (2^H, 2^H) at top right.
+    plane defined with (0,0) at bottom left and (2^H-1, 2^H-1) at top right.
     """
     def __init__(self, x, y):
         """
@@ -154,8 +154,8 @@ class Rectangle:
         the midpoint is computed by averaging the min and max on each axis.
         raises ValueError if index is not in range [0, 3].
         """
-        mid_x = (self.x_min + self.x_max) / 2
-        mid_y = (self.y_min + self.y_max) / 2
+        mid_x = (self.x_min + self.x_max) // 2
+        mid_y = (self.y_min + self.y_max) // 2
         if index == 0:  # top-left (NW)
             return Rectangle(self.x_min, mid_x, mid_y, self.y_max)
         elif index == 1:  # top-right (NE)
