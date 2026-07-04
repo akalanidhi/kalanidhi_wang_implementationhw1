@@ -326,7 +326,8 @@ def game_loop(state):
 
 
 def main():
-
+    with open("log.txt",'w') as file:
+        pass
     pygame.init()
 
     state = GameState()
