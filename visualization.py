@@ -99,3 +99,28 @@ def draw_status(screen, mode, animation, nodes, segments):
     text = font.render(status, True, (0, 0, 0))
 
     screen.blit(text, (10, height - STATUS_HEIGHT + 6))
+
+
+def draw_error(screen, message):
+    """
+    Draws an error message on the screen.
+
+    Args:
+        screen: Pygame display surface.
+        message: Error message to display.
+    """
+    width = screen.get_width()
+    height = screen.get_height()
+
+    # Background
+    pygame.draw.rect(
+        screen,
+        (255, 255, 255),
+        (0, 0, width, height)
+    )
+
+    font = pygame.font.Font(None, 30)
+    text = font.render(message, True, (255, 0, 0))
+
+    text_rect = text.get_rect(center=(width // 2, height // 2))
+    screen.blit(text, text_rect)
