@@ -81,4 +81,4 @@ class AnimationManager:
                 continue
             rect_w = cx2 - cx1
             rect_h = cy2 - cy1
-            pygame.draw.rect(screen, HIGHLIGHT_COLOR, (cx1, pygame_y, rect_w, rect_h), width=2)
+            pygame.draw.rect(screen, HIGHLIGHT_COLOR, (cx1, cy1, rect_w, rect_h), width=2)
