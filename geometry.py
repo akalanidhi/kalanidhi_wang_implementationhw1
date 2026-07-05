@@ -1,30 +1,3 @@
-"""
-SAMPLE IMPLEMENTATION, dont need to follow but helps me keep track of which types of functions will likely exist where
-
-class Point
-
-__init(x,y)
-__repr__()
-
-class Segment
-__init__(x1, x2, y)
-contains_point(point)
-intersects_rectangle(rect)
-draw(screen)
-
-
-class Rectangle
-__init__()
-contains_point(point)
-contains_segment(segment)
-intersects_segment(segment)
-intersects_rectangle(rectangle)
-get_quadrant(index)
-draw(screen)t
-
-
-
-"""
 import pygame
 
 class Point:
@@ -90,7 +63,6 @@ class Segment:
     def draw(self, screen):
         """
         draws this segment on the given pygame screen.
-        placeholder — to be implemented with pygame drawing logic.
         """
         pygame.draw.line(screen,(0,0,255), (self.x1, self.y), (self.x2, self.y), 2)
 
@@ -171,7 +143,6 @@ class Rectangle:
     def draw(self, screen):
         """
         draws this rectangle on the given pygame screen.
-        placeholder — to be implemented with pygame drawing logic.
         """
         pygame.draw.rect(screen,
         (0, 0, 0),pygame.Rect(self.x_min, self.y_min, self.x_max - self.x_min, self.y_max - self.y_min),1)

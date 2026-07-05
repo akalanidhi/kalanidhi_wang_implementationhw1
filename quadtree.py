@@ -97,7 +97,7 @@ class quadTree:
                     self._insert(child, seg)
 
     def range_report(self, rectangle):
-        results = []
+        results = set()
 
         self._range_report(self.root, rectangle, results)
 
@@ -116,7 +116,9 @@ class quadTree:
         for seg in node.segments:
 
             if seg.int_rectangle(rectangle):
-                results.append(seg)
+                if id(seg) not in results:
+                    results.add(id(seg))
+                    #results.append(seg)
 
         if not node.is_leaf:
 
@@ -124,9 +126,10 @@ class quadTree:
                 self._range_report(child, rectangle, results)
 
     def range_count(self, rectangle): 
-        return self._range_count(self.root, rectangle)
+        seen = set()
+        return self._range_count(self.root, rectangle, seen)
     
-    def _range_count(self, node, rectangle):
+    def _range_count(self, node, rectangle, seen):
         if node is None:
             return 0
 
@@ -146,6 +149,9 @@ class quadTree:
             total = 0
 
             for seg in node.segments:
+                if id(seg) in seen:
+                    continue
+                seen.add(id(seg))
 
                 if rectangle.cont_point(
                     Point(seg.x1, seg.y)
@@ -163,10 +169,7 @@ class quadTree:
 
         for child in node.children:
 
-            total += self._range_count(
-                child,
-                rectangle
-            )
+            total += self._range_count(child,rectangle, seen)
 
         return total
 
