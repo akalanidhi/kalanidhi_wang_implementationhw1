@@ -2,4 +2,6 @@
 
 CURRENT BUGS TO CATCH
 clear rectangle after going back to normal mode
-count and report are not completely correct
+log report and query
+highlight report segments if within range
+ensure all required programs are there

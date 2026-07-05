@@ -116,9 +116,8 @@ class quadTree:
         for seg in node.segments:
 
             if seg.int_rectangle(rectangle):
-                if id(seg) not in results:
-                    results.add(id(seg))
-                    #results.append(seg)
+                if seg not in results:
+                    results.add(seg)
 
         if not node.is_leaf:
 
