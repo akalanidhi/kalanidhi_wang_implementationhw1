@@ -29,7 +29,6 @@ def read_file(file_path):
         init_queries = []
         for line in file:
             split_line = line.strip().split(" ")
-            print(split_line)
             if split_line[0] == "i":
                 x1, x2, y = int(split_line[1]), int(split_line[2]), int(split_line[3])
                 x_min = min(x1, x2)

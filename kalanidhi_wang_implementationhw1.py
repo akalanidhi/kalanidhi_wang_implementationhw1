@@ -101,7 +101,7 @@ def handle_keyboard(event, state):
         mode = Mode.REPORT
         print("Switched to REPORT mode.")
         state.mode = Mode.REPORT
-    if event.key == pygame.K_c:
+    if event.key == pygame.K_q:
         mode = Mode.COUNT
         print("Switched to COUNT mode.")
         state.mode = Mode.COUNT
@@ -160,12 +160,7 @@ def handle_mouse(event, state):
             ymin = min(state.first_click.y, second.y)
             ymax = max(state.first_click.y, second.y)
 
-            state.query_rect = geometry.Rectangle(
-                xmin,
-                xmax,
-                ymin,
-                ymax
-            )
+            state.query_rect = geometry.Rectangle(xmin,xmax,ymin,ymax)
 
             state.tree.query(state.query_rect)
 
