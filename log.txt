@@ -1,0 +1,15 @@
+A quadrant with LL=(0, 0) and UR=(512, 512) was called
+A quadrant with LL=(0, 0) and UR=(512, 512) was called
+A quadrant with LL=(0, 0) and UR=(512, 512) was called
+A quadrant with LL=(0, 0) and UR=(512, 512) was called
+A quadrant with LL=(0, 0) and UR=(256, 256) was called
+A quadrant with LL=(256, 0) and UR=(512, 256) was called
+A quadrant with LL=(0, 0) and UR=(256, 256) was called
+A quadrant with LL=(0, 256) and UR=(256, 512) was called
+A quadrant with LL=(256, 256) and UR=(512, 512) was called
+A quadrant with LL=(0, 0) and UR=(256, 256) was called
+A quadrant with LL=(256, 0) and UR=(512, 256) was called
+A quadrant with LL=(0, 0) and UR=(512, 512) was called
+A quadrant with LL=(0, 256) and UR=(256, 512) was called
+A quadrant with LL=(0, 0) and UR=(512, 512) was called
+A quadrant with LL=(0, 256) and UR=(256, 512) was called

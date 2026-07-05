@@ -139,7 +139,7 @@ def handle_keyboard(event, state):
                     max(x1, x2),
                     y
                 )
-
+                state.anim.clear_highlights()  # Clear highlights before inserting a new segment
                 state.tree.insert(segment)
 
                 print(f"Inserted segment ({x1}, {x2}, {y})")
@@ -155,6 +155,7 @@ def handle_keyboard(event, state):
                 xmax = int(cmd_str[3])
                 ymax = int(cmd_str[4])
 
+                state.anim.clear_highlights()  # Clear highlights before performing a new query
                 state.query_rect = geometry.Rectangle(
                     xmin,
                     xmax,

@@ -42,12 +42,13 @@ class quadNode:
     each node has: a rectangular boundary, a list of segments it contains, and up to 4 children.
     if the number of segments exceeds max_segments, the node splits into 4 quadrants.
     """
-    def __init__(self, boundary, level=0):
+    def __init__(self, boundary, level=0, anim = None):
         self.boundary = boundary  #rectangle object defining the node's region
         self.segments = []        #list of segments contained in this node
         self.children = [None] * 4  #list of 4 child nodes (NW, NE, SW, SE)
         self.is_leaf = True       # true if this node has no children (optional, can be inferred from children, mainly for simplicity)
         self.level = level        #depth level of this node in the quadtree (also optional, mainly for debugging/visualization if want different colors)
+        self.anim = anim
 
 class quadTree:
     """
@@ -108,16 +109,13 @@ class quadTree:
         self._insert(self.root, segment)
 
     def _insert(self, node, segment):
-
+        self._highlight_node(node)  # highlight the node being visited
+        
         # Ignore segments completely outside this node
         if not node.boundary.int_segment(segment):
             return
         
-        if self.anim:   # <-- add this
-            self.anim.print_and_highlight_quadrant(
-            node.boundary.x_min, node.boundary.y_min,
-            node.boundary.x_max, node.boundary.y_max
-        )
+        
 
         # Leaf with room
         if node.is_leaf and len(node.segments) < self.max_segments:
@@ -171,16 +169,12 @@ class quadTree:
 
         if node is None:
             return
+        
+        self._highlight_node(node)  # highlight the node being visited
 
         if not node.boundary.int_rectangle(rectangle):
             return
         
-        if self.anim:   # <-- add this
-            self.anim.print_and_highlight_quadrant(
-            node.boundary.x_min, node.boundary.y_min,
-            node.boundary.x_max, node.boundary.y_max
-        )
-
         for seg in node.segments:
 
             if seg.int_rectangle(rectangle):
@@ -236,6 +230,8 @@ class quadTree:
 
         if node is None:
             return None
+        
+        self._highlight_node(node)  # highlight the node being visited
 
         if not node.boundary.cont_point(point):
             return None
@@ -254,10 +250,16 @@ class quadTree:
 
 
     def clear_highlights(self):
+        self.anim._highlighted_quads.clear()
+
+    def _highlight_node(self, node):
         if self.anim:
-            self.anim._highlighted_quads.clear()
-
-
+            b = node.boundary
+            self.anim.print_and_highlight_quadrant(b.x_min, b.y_min, b.x_max, b.y_max)
+        
+        else:
+            return
+        
     def print_tree(self):
         self._print(self.root)
 

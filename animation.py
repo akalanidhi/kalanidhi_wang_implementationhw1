@@ -25,7 +25,7 @@ import pygame
 
 VISIBLE_MIN = 0
 VISIBLE_MAX = 511
-HIGHLIGHT_FRAMES = 100
+HIGHLIGHT_FRAMES = 300
 HIGHLIGHT_COLOR = (255, 215, 0)
 
 
@@ -82,3 +82,8 @@ class AnimationManager:
             rect_w = cx2 - cx1
             rect_h = cy2 - cy1
             pygame.draw.rect(screen, HIGHLIGHT_COLOR, (cx1, cy1, rect_w, rect_h), width=2)
+
+
+    def clear_highlights(self):
+        """Clear all currently-highlighted quadrants. Call at the start of each frame."""
+        self._highlighted_quads.clear()
