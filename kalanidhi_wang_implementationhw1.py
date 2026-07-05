@@ -109,6 +109,11 @@ def handle_keyboard(event, state):
         mode = Mode.COUNT
         print("Switched to COUNT mode.")
         state.mode = Mode.COUNT
+    elif event.key == pygame.K_ESCAPE:
+        state.mode = Mode.NORMAL
+        print("Switched to NORMAL mode")
+        mode = Mode.NORMAL
+    """
     if event.key == pygame.K_RETURN:
 
         cmd = command.strip()
@@ -156,12 +161,7 @@ def handle_keyboard(event, state):
                 ymax = int(cmd_str[4])
 
                 state.anim.clear_highlights()  # Clear highlights before performing a new query
-                state.query_rect = geometry.Rectangle(
-                    xmin,
-                    xmax,
-                    ymin,
-                    ymax
-                )
+                state.query_rect = geometry.Rectangle(xmin,xmax,ymin,ymax)
 
                 results = state.tree.query(state.query_rect)
 
@@ -193,6 +193,7 @@ def handle_keyboard(event, state):
 
         if event.unicode.isprintable():
             command += event.unicode
+            """
 
 def handle_mouse(event, state):
 
