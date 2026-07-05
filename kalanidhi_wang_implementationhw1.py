@@ -60,7 +60,7 @@ class GameState:
 
 def load_data(state):
 
-    h, initial_segments, error = parser.read_file("input.txt")
+    h, initial_segments, initial_reports, initial_queries, error = parser.read_file("input.txt")
 
     state.h = h
 
