@@ -175,3 +175,6 @@ class Rectangle:
         """
         pygame.draw.rect(screen,
         (0, 0, 0),pygame.Rect(self.x_min, self.y_min, self.x_max - self.x_min, self.y_max - self.y_min),1)
+
+    def cont_rectangle(self, other):
+        return(self.x_min <= other.x_min and self.x_max >= other.x_max and self.y_min <= other.y_min and self.y_max >= other.y_max)

@@ -22,14 +22,18 @@ def read_file(file_path):
         error_mode: True if there was an error in the input file, False otherwise
     """
     with open(file_path, "r", encoding="utf-8") as file:
-        h = int(next(file).strip())  # Read the first line for grid size
-        boundary = (2**h)-1
         init_segments = []
         init_reports = []
         init_queries = []
         for line in file:
-            split_line = line.strip().split(" ")
-            if split_line[0] == "i":
+            print(line)
+            split_line = line.split(" ")
+            if split_line[0] == "%":
+                log_command(line)
+            elif len(split_line) == 1:
+                h = int(split_line[0])
+                boundary = (2**h)-1
+            elif split_line[0] == "i":
                 x1, x2, y = int(split_line[1]), int(split_line[2]), int(split_line[3])
                 x_min = min(x1, x2)
                 x_max = max(x1, x2)
@@ -46,39 +50,13 @@ def read_file(file_path):
                 if x1 < 0 or x2 < 0 or y1 < 0 or y2 < 0 or x1 > boundary or x2 > boundary or y1 > boundary or y2 > boundary:
                     return h, init_segments, init_reports, init_queries, True
                 init_queries.append(Rectangle(x1,x2,y1,y2))
+    print(f"h = {h}")
     return h, init_segments, init_reports, init_queries, False
 
 
-def read_user_input(animation_mode, insert_mode, report_mode):
-    """
-    Reads user input from the console to set the modes.
-
-    Args:
-        animation_mode (bool): Current state of animation mode.
-        insert_mode (bool): Current state of insert mode.
-        report_mode (bool): Current state of report mode.
-
-    Returns:
-        animation_mode (bool): Updated state of animation mode.
-        insert_mode (bool): Updated state of insert mode.
-        report_mode (bool): Updated state of report mode.
-        """
-    user_input = input("enter command (a/i/r/q): ").strip().lower()
-    if user_input == 'a':
-        animation_mode = not animation_mode
-    elif user_input == 'i':
-        insert_mode = not insert_mode
-    elif user_input == 'r':
-        report_mode = not report_mode
-    elif user_input == 'q':
-        print("Exiting program.")
-        exit(0)
-    else:
-        print("Invalid input. Please try again.")
-    print(f"Animation mode: {'ON' if animation_mode else 'OFF'}, Insert mode: {'ON' if insert_mode else 'OFF'}, Report mode: {'ON' if report_mode else 'OFF'}")
-    return animation_mode, insert_mode, report_mode
-
-
+def log_command(line):
+    with open('log.txt', 'a') as f:
+        f.write(line.rstrip() + "\n")
 
 
 

@@ -55,6 +55,9 @@ class GameState:
         
         self.insert_start = None
 
+        self.initial_reports = []
+        self.initial_queries = []
+
 
 
 
@@ -63,23 +66,19 @@ def load_data(state):
     h, initial_segments, initial_reports, initial_queries, error = parser.read_file("input.txt")
 
     state.h = h
+    state.initial_reports = initial_reports
+    state.initial_queries = initial_queries
 
     if error:
 
         state.mode = Mode.ERROR
         state.error_message = "Invalid segment coordinates."
 
-        state.screen = visualization.create_window(
-            300,
-            "Error screen"
-        )
+        state.screen = visualization.create_window(300,"Error screen")
 
         return
 
-    state.screen = visualization.create_window(
-        2 ** h,
-        "Quadtree Visualization"
-    )
+    state.screen = visualization.create_window(2 ** h,"Quadtree Visualization")
 
     # Root boundary
     boundary = geometry.Rectangle(0,2 ** h,0,2 ** h)
@@ -90,6 +89,18 @@ def load_data(state):
     for segment in initial_segments:
         state.tree.insert(segment)
 
+def process_initial_commands(state):
+    print("Initial reports")
+    for rect in state.initial_reports:
+        print(f"Report rectangle: {rect}")
+        results = state.tree.range_report(rect)
+        print(f"Found {len(results)} segments.")
+
+    for rect in state.initial_queries:
+        print(f"Query point: ({rect})")
+        results = state.tree.range_count(rect)
+        print(f"Node contains {len(results)} endpoints.")
+    
 
 def handle_keyboard(event, state):
 
@@ -162,7 +173,32 @@ def handle_mouse(event, state):
 
             state.query_rect = geometry.Rectangle(xmin,xmax,ymin,ymax)
 
-            state.tree.query(state.query_rect)
+            results = state.tree.range_report(state.query_rect)
+            print(f"Found {len(results)} segments.")
+
+            state.first_click = None
+
+
+    elif state.mode == Mode.COUNT:
+
+        if state.first_click is None:
+
+            state.first_click = geometry.Point(x, y)
+
+        else:
+
+            second = geometry.Point(x, y)
+
+            xmin = min(state.first_click.x, second.x)
+            xmax = max(state.first_click.x, second.x)
+
+            ymin = min(state.first_click.y, second.y)
+            ymax = max(state.first_click.y, second.y)
+
+            state.query_rect = geometry.Rectangle(xmin,xmax,ymin,ymax)
+
+            results = state.tree.range_count(state.query_rect)
+            print(f"Found {results} endpoints.")
 
             state.first_click = None
 
@@ -245,6 +281,8 @@ def main():
 
     load_data(state)
 
+    process_initial_commands(state)
+    
     game_loop(state)
 
     pygame.quit()

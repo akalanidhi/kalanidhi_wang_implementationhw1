@@ -1,4 +1,5 @@
 # kalanidhi_wang_implementationhw1
 
 CURRENT BUGS TO CATCH
-ensuring the x and y coords for the input file are smaller than 2^H
+clear rectangle after going back to normal mode
+count and report are not completely correct

@@ -1,40 +1,4 @@
-"""
-SAMPLE IMPLEMENTATION, dont need to follow but helps me keep track of which types of functions will likely exist where
-
-quadNode 
-members: 
-    boundary: Rectangle
-    segments: list
-    children: list[4]
-    is_leaf
-    level
-
-insert(segment)
-split()
-query(rect)
-contains(segment)
-draw(screen)
-count_nodes()
-count_segments()
-
-
-
-quadTree
-members:
-    root
-    node_count
-    endpoint_count
-    max_segments = 3
-
-
-insert(segment)
-query(rect)
-find(point)
-clear_highlights()
-draw(screen)
-print_tree()
-
-"""
+from geometry import Point
 
 class quadNode:
     """
@@ -49,6 +13,7 @@ class quadNode:
         self.is_leaf = True       # true if this node has no children (optional, can be inferred from children, mainly for simplicity)
         self.level = level        #depth level of this node in the quadtree (also optional, mainly for debugging/visualization if want different colors)
         self.anim = anim
+        self.endpoint_count = 0
 
 class quadTree:
     """
@@ -56,7 +21,7 @@ class quadTree:
     manages insertion of segments, querying, and visualization.
     """
     def __init__(self, boundary, anim=None):
-        self.root = quadNode(boundary)   #root node of the quadtree
+        self.root = quadNode(boundary, anim=anim)   #root node of the quadtree
         self.max_segments = 3            #maximum segments a node can hold before splitting
         self.segment_count = 0                  #total number of segments in the quadtree
         self.anim = anim
@@ -109,43 +74,52 @@ class quadTree:
         self._insert(self.root, segment)
 
     def _insert(self, node, segment):
-        self._highlight_node(node)  # highlight the node being visited
-        
-        # Ignore segments completely outside this node
+        """
+        Recursively inserts a segment into the quadtree.
+
+        A segment is stored only in leaf nodes. If a leaf overflows
+        (more than max_segments), it is split and its segments are
+        redistributed among the appropriate children.
+        """
+
+        # Highlight visited node (animation)
+        self._highlight_node(node)
+
+        # Segment does not intersect this node's region
         if not node.boundary.int_segment(segment):
             return
-        
-        
 
-        # Leaf with room
-        if node.is_leaf and len(node.segments) < self.max_segments:
-            node.segments.append(segment)
-            return
+        # Update endpoint count for this node
+        left = Point(segment.x1, segment.y)
+        right = Point(segment.x2, segment.y)
 
-        # Need to split
+        if node.boundary.cont_point(left):
+            node.endpoint_count += 1
+
+        if node.boundary.cont_point(right):
+            node.endpoint_count += 1
+
         if node.is_leaf:
+
+            # Leaf has room
+            if len(node.segments) < self.max_segments:
+                node.segments.append(segment)
+                return
+
+            # Leaf is full -> split it
             self.split(node)
-
-        # Insert into every intersecting child
-        inserted = False
-
         for child in node.children:
 
             if child.boundary.int_segment(segment):
                 self._insert(child, segment)
-                inserted = True
-
-        # Segment crosses multiple children
-        if not inserted:
-            node.segments.append(segment)
 
     def split(self, node):
 
         node.children = [
-            quadNode(node.boundary.get_quad(0), node.level + 1),
-            quadNode(node.boundary.get_quad(1), node.level + 1),
-            quadNode(node.boundary.get_quad(2), node.level + 1),
-            quadNode(node.boundary.get_quad(3), node.level + 1)
+            quadNode(node.boundary.get_quad(0), node.level + 1, self.anim),
+            quadNode(node.boundary.get_quad(1), node.level + 1, self.anim),
+            quadNode(node.boundary.get_quad(2), node.level + 1, self.anim),
+            quadNode(node.boundary.get_quad(3), node.level + 1, self.anim)
         ]
 
         node.is_leaf = False
@@ -158,14 +132,14 @@ class quadTree:
                 if child.boundary.int_segment(seg):
                     self._insert(child, seg)
 
-    def query(self, rectangle):
+    def range_report(self, rectangle):
         results = []
 
-        self._query(self.root, rectangle, results)
+        self._range_report(self.root, rectangle, results)
 
         return results
     
-    def _query(self, node, rectangle, results):
+    def _range_report(self, node, rectangle, results):
 
         if node is None:
             return
@@ -183,7 +157,55 @@ class quadTree:
         if not node.is_leaf:
 
             for child in node.children:
-                self._query(child, rectangle, results)
+                self._range_report(child, rectangle, results)
+
+    def range_count(self, rectangle): 
+        return self._range_count(self.root, rectangle)
+    
+    def _range_count(self, node, rectangle):
+        if node is None:
+            return 0
+
+        self._highlight_node(node)
+
+        # completely outside
+        if not node.boundary.int_rectangle(rectangle):
+            return 0
+
+        # node completely inside query
+        if rectangle.cont_rectangle(node.boundary):
+            return node.endpoint_count
+
+        # leaf
+        if node.is_leaf:
+
+            total = 0
+
+            for seg in node.segments:
+
+                if rectangle.cont_point(
+                    Point(seg.x1, seg.y)
+                ):
+                    total += 1
+
+                if rectangle.cont_point(
+                    Point(seg.x2, seg.y)
+                ):
+                    total += 1
+
+            return total
+
+        total = 0
+
+        for child in node.children:
+
+            total += self._range_count(
+                child,
+                rectangle
+            )
+
+        return total
+
 
     def report(self):
         #Print information about the tree.
