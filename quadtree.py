@@ -31,44 +31,7 @@ class quadTree:
         inserts a segment into quadtree.
         if node is not provided, insertion starts at the root.
         recursion is handled inside this function.
-        
-        #start at root if no node provided
-        if node is None:
-            node = self.root
 
-    #Case 1: base case --> node has space for the segment
-        #if leaf node and has less than 3 segments currently, store segment here
-        #node.children[0] is None is a proxy check for the whole node being a leaf, bc if it's a leaf, all children should be None
-        if node.children[0] is None and len(node.segments) < self.max_segments:
-            node.segments.append(segment)
-            return
-
-    #Case 2: recursive case --> node is full and needs to split, redistribute segments, and insert into children
-        #if leaf node but already 3 segments, split first
-        if node.children[0] is None:
-            mid_x = (node.boundary.x_min + node.boundary.x_max) / 2
-            mid_y = (node.boundary.y_min + node.boundary.y_max) / 2
-
-            node.children = [
-                quadNode(node.boundary.get_quad(0), node.level + 1),
-                quadNode(node.boundary.get_quad(1), node.level + 1),
-                quadNode(node.boundary.get_quad(2), node.level + 1),
-                quadNode(node.boundary.get_quad(3), node.level + 1)
-            ]
-
-            node.is_leaf = False
-
-            #redistribute OLD segments into children bc now that the node has children, the segments should be pushed down to the appropriate quadrants
-            old_segments = node.segments
-            node.segments = []
-
-            for old_seg in old_segments:
-                self.insert(old_seg, node)
-
-            #insert NEW segment into children (can be multiple children if it spans quadrants)
-            for child in node.children:
-                if child.boundary.int_segment(segment):
-                    self.insert(segment, child)
         """
         self.segment_count += 1
         self._insert(self.root, segment)
@@ -108,6 +71,7 @@ class quadTree:
 
             # Leaf is full -> split it
             self.split(node)
+
         for child in node.children:
 
             if child.boundary.int_segment(segment):
@@ -205,11 +169,6 @@ class quadTree:
             )
 
         return total
-
-
-    def report(self):
-        #Print information about the tree.
-        ...
 
     def count_nodes(self):
         return self._count_nodes(self.root)

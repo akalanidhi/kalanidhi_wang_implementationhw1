@@ -1,13 +1,3 @@
-"""
-SAMPLE IMPLEMENTATION, dont need to follow but helps me keep track of which types of functions will likely exist where
-main()
-load_data()
-game_loop()
-handle_keyboard(event)
-handle_mouse(event)
-set_mode(mode)
-"""
-
 from tkinter import font
 
 import pygame
@@ -120,6 +110,8 @@ def handle_keyboard(event, state):
         state.mode = Mode.NORMAL
         print("Switched to NORMAL mode")
         mode = Mode.NORMAL
+    if event.key == pygame.K_a:
+        state.anim.toggle_animation()
    
 def handle_mouse(event, state):
 
@@ -245,7 +237,6 @@ def draw(state):
 
 
 def update(state):
-
     state.anim.update() 
 
 def game_loop(state):

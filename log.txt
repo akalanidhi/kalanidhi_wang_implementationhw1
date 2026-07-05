@@ -4,6 +4,12 @@
 % To insert a segment, create a new line, type "i", and then your x1, x2, and y coordinates with SPACES in between everything
 % To generate a report, create a new line, type "r", and then your x1, y1, x2, and y2 coordinates representing the rectangle for the report. Remember the spaces!
 % To generate a count query, create a new line, type "q", and then your x1, y2, x2, and y2 coordinates representing the rectangle for the report, w/ spaces.
+% Welcome to our quadtree implementation!
+% Instructions: Please update all user inputs in input.txt
+% PUT SPACES IN BETWEEN ALL VALUES
+% To insert a segment, create a new line, type "i", and then your x1, x2, and y coordinates with SPACES in between everything
+% To generate a report, create a new line, type "r", and then your x1, y1, x2, and y2 coordinates representing the rectangle for the report. Remember the spaces!
+% To generate a count query, create a new line, type "q", and then your x1, y2, x2, and y2 coordinates representing the rectangle for the report, w/ spaces.
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
@@ -15,6 +21,19 @@ A quadrant with LL=(0, 256) and UR=(256, 512) was called
 A quadrant with LL=(256, 256) and UR=(512, 512) was called
 A quadrant with LL=(0, 0) and UR=(256, 256) was called
 A quadrant with LL=(256, 0) and UR=(512, 256) was called
+A quadrant with LL=(0, 0) and UR=(512, 512) was called
+A quadrant with LL=(0, 256) and UR=(256, 512) was called
+A quadrant with LL=(256, 256) and UR=(512, 512) was called
+A quadrant with LL=(0, 0) and UR=(256, 256) was called
+A quadrant with LL=(256, 0) and UR=(512, 256) was called
+A quadrant with LL=(0, 0) and UR=(512, 512) was called
+A quadrant with LL=(0, 256) and UR=(256, 512) was called
+A quadrant with LL=(128, 256) and UR=(256, 384) was called
+A quadrant with LL=(128, 256) and UR=(192, 320) was called
+A quadrant with LL=(192, 256) and UR=(256, 320) was called
+A quadrant with LL=(192, 320) and UR=(256, 384) was called
+A quadrant with LL=(192, 256) and UR=(256, 320) was called
+A quadrant with LL=(192, 320) and UR=(256, 384) was called
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
 A quadrant with LL=(0, 256) and UR=(256, 512) was called
 A quadrant with LL=(256, 256) and UR=(512, 512) was called
