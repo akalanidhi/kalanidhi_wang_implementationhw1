@@ -146,14 +146,3 @@ def draw_rectangle(screen, rectangle, color=(255, 0, 0), width=2):
         pygame.Rect(x, y, rect_width, rect_height),
         width
     )
-
-def draw_command(screen, command):
-    font = pygame.font.Font(None, 28)
-
-    text = font.render(
-        "> " + command,
-        True,
-        (0, 0, 0)
-    )
-
-    screen.blit(text, (10, 10))
