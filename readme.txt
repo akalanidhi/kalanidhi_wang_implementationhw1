@@ -1,3 +1,4 @@
+Anjali Kalanidhi and Sisi Wang
 Welcome to our quadtree implementation!
 
 This code requires the pygame library to be installed for visualization purposes.
