@@ -84,7 +84,7 @@ def load_data(state):
 
     state.world_size = 2 ** h
 
-    width = state.world_size + state.toolbox_width
+    width = state.world_size
     height = state.world_size + state.status_height
 
     state.screen = pygame.display.set_mode((width, height))
@@ -111,13 +111,17 @@ def load_data(state):
         state.anim.toggle_animation()
         print("Animation toggled")
 
-    x = state.world_size + 20
+    y = state.world_size + 5
+    btn_w = 120
+    btn_h = 30
+    gap = 10
+    x_start = 20
 
     state.buttons = [
-    Button(x, 20, 180, 35, "INSERT", set_insert),
-    Button(x, 70, 180, 35, "REPORT", set_report),
-    Button(x, 120, 180, 35, "COUNT", set_count),
-    Button(x, 170, 180, 35, "ANIMATION", toggle_anim),
+    Button(x_start, y, btn_w, btn_h, "INSERT", set_insert),
+    Button(x_start + (btn_w + gap), y, btn_w, btn_h, "REPORT", set_report),
+    Button(x_start + 2 * (btn_w + gap), y, btn_w, btn_h, "COUNT", set_count),
+    Button(x_start + 3 * (btn_w + gap), y, btn_w, btn_h, "ANIMATION", toggle_anim),
 ]
 
     # Insert all segments from file
@@ -188,7 +192,7 @@ def handle_mouse(event, state):
 
     x, y = event.pos
 
-    # ignore toolbox + status bar clicks
+    # ignore status bar clicks
     if not (0 <= x < state.world_size and 0 <= y < state.world_size):
         return
 
@@ -302,22 +306,15 @@ def draw(state):
         pygame.draw.rect(
             screen,
             (245, 245, 245),
-            (state.world_size, 0, state.toolbox_width, state.world_size)
+            (0, state.world_size, state.world_size, state.status_height)
         )
 
         pygame.draw.line(
             screen,
             (0, 0, 0),
-            (state.world_size, 0),
+            (0, state.world_size),
             (state.world_size, state.world_size),
             2
-        )
-
-  
-        pygame.draw.rect(
-            screen,
-            (230, 230, 230),
-            (0, state.world_size, state.world_size + state.toolbox_width, state.status_height)
         )
 
         visualization.draw_status(
