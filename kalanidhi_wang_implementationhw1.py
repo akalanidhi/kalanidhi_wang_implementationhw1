@@ -244,6 +244,11 @@ def handle_mouse(event, state):
 
             ymin = min(state.first_click.y, second.y)
             ymax = max(state.first_click.y, second.y)
+            if xmin != state.first_click.x or ymin == state.first_click.y:
+                print("ERROR: RECTANGLE DOES NOT GO FROM BOTTOM LEFT TO TOP RIGHT")
+                print(f"{xmin},{ymin},{xmax},{ymax}")
+                state.first_click = None
+                return
 
             state.query_rect = geometry.Rectangle(xmin,xmax,ymin,ymax)
 
@@ -263,12 +268,18 @@ def handle_mouse(event, state):
 
             second = geometry.Point(x, y)
            
-
+            
             xmin = min(state.first_click.x, second.x)
             xmax = max(state.first_click.x, second.x)
 
             ymin = min(state.first_click.y, second.y)
             ymax = max(state.first_click.y, second.y)
+
+            if xmin != state.first_click.x or ymin == state.first_click.y:
+                print("ERROR: RECTANGLE DOES NOT GO FROM BOTTOM LEFT TO TOP RIGHT")
+                print(f"{xmin},{ymin},{xmax},{ymax}")
+                state.first_click = None
+                return
 
             state.query_rect = geometry.Rectangle(xmin,xmax,ymin,ymax)
 

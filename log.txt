@@ -12,16 +12,16 @@ A quadrant with LL=(257, 257) and UR=(512, 512) was called
 A quadrant with LL=(0, 0) and UR=(256, 256) was called
 reporting segment 3 whose coordinates are 200 100 300. It intersects the query region 100 100 200 200
 A quadrant with LL=(257, 0) and UR=(512, 256) was called
-RangeReporting was called with parameters 152, 281, 272, 353.
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
 A quadrant with LL=(0, 257) and UR=(256, 512) was called
 A quadrant with LL=(257, 257) and UR=(512, 512) was called
 A quadrant with LL=(0, 0) and UR=(256, 256) was called
 A quadrant with LL=(257, 0) and UR=(512, 256) was called
-RangeReporting was called with parameters 82, 234, 152, 288.
+RangeCounting was called with parameters 172 179 292 324. We found 1 endpoints of segments inside the query region.
+RangeReporting was called with parameters 118, 174, 306, 346.
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
 A quadrant with LL=(0, 257) and UR=(256, 512) was called
 A quadrant with LL=(257, 257) and UR=(512, 512) was called
 A quadrant with LL=(0, 0) and UR=(256, 256) was called
-reporting segment 1 whose coordinates are 90 250 235. It intersects the query region 82 234 152 288
+reporting segment 1 whose coordinates are 90 250 235. It intersects the query region 118 174 306 346
 A quadrant with LL=(257, 0) and UR=(512, 256) was called
