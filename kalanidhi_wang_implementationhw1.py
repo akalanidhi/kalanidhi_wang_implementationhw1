@@ -55,6 +55,8 @@ class GameState:
         self.toolbox_width = 220
         self.status_height = 40
 
+        self.query_history = []
+
 
 
 
@@ -251,6 +253,15 @@ def handle_mouse(event, state):
                 return
 
             state.query_rect = geometry.Rectangle(xmin,xmax,ymin,ymax)
+            
+            
+            MAX_HISTORY = 10
+
+            state.query_history.append(state.query_rect)
+
+            if len(state.query_history) > MAX_HISTORY:
+                state.query_history.pop(0)  
+
 
             results = state.tree.range_report(state.query_rect)
             print(f"Found {len(results)} segments.")
@@ -282,6 +293,15 @@ def handle_mouse(event, state):
                 return
 
             state.query_rect = geometry.Rectangle(xmin,xmax,ymin,ymax)
+
+
+            MAX_HISTORY = 10
+
+            state.query_history.append(state.query_rect)
+
+            if len(state.query_history) > MAX_HISTORY:
+                state.query_history.pop(0)  
+
 
             results = state.tree.range_count(state.query_rect)
             print(f"Found {results} endpoints.")
@@ -348,6 +368,13 @@ def draw(state):
 
     for button in state.buttons:
         button.draw(screen)
+    
+    for rect in state.query_history:
+        visualization.draw_rectangle(
+        screen,
+        rect,
+        color=(200, 200, 200)
+    )
 
     pygame.display.flip()
 
