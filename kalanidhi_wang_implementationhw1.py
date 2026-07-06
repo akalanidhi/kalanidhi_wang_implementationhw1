@@ -53,8 +53,11 @@ class GameState:
 
 def load_data(state):
     """
-    loads data from "input.txt"
-    sets initial h, as well as S
+    Loads data from "input.txt"
+
+    Args: state
+
+    Returns: nothing, but sets initial h, as well as SegmentArray
     """
 
     h, SegmentArray, initial_reports, initial_queries, error = parser.read_file("input.txt")
@@ -85,6 +88,12 @@ def load_data(state):
     state.tree.build_endpoint_counts()
 
 def process_initial_commands(state):
+    """
+    Processes all intial reports and queries from the input.txt file
+
+    Args: state
+    Returns: nothing, but does current reports and queries
+    """
     print("Initial reports")
     for rect in state.initial_reports:
         print(f"Report rectangle: {rect}")
@@ -98,6 +107,13 @@ def process_initial_commands(state):
     
 
 def handle_keyboard(event, state):
+    """
+    Takes keyboard inputs and updates to proper mode, clearing rectangles on screen (if needed)
+    
+    Args: the event detected by pygame, state
+
+    Returns: null
+    """
 
     if event.key == pygame.K_i:
         mode = Mode.INSERT
@@ -121,6 +137,13 @@ def handle_keyboard(event, state):
         state.anim.toggle_animation()
    
 def handle_mouse(event, state):
+    """
+    Handles mouse to find correct position of mouse when clicked for queries and new segments
+
+    Args: event detected by pygame
+
+    Returns: null
+    """
 
     if state.mode == Mode.ERROR:
         return
@@ -204,6 +227,13 @@ def handle_mouse(event, state):
 
 
 def draw(state):
+    """
+    Draws error screen (if input.txt is not correct), status, and query rectangle if in use
+    
+    Args: State
+
+    Returns: null
+    """
 
     screen = state.screen
 
@@ -244,14 +274,35 @@ def draw(state):
     pygame.display.flip()
 
 def reset_query_state(state):
+    """
+    Helper function to clear any rectangle on screen for when in normal or insert  mode
+    
+    Args: state
+
+    Returns: null
+    """
     state.query_rect = None
     state.first_click = None
     state.insert_start = None
 
 def update(state):
+    """
+    Helper function to update the state when needed
+    
+    Args: state
+
+    Returns: null
+    """
     state.anim.update() 
 
 def game_loop(state):
+    """
+    Keeps the game state updated, watching for events such as quit, key presses, or mouse clicks 
+    
+    Args: state
+
+    Returns: null
+    """
 
     while state.running:
 
@@ -276,6 +327,13 @@ def game_loop(state):
 
 
 def main():
+    """
+    Main function. Opens file, creates the state, loads the data, and loops the state
+    
+    Args: N/A
+
+    Returns: null
+    """
     with open("log.txt",'w') as file:
         pass
     pygame.init()

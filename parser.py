@@ -47,10 +47,24 @@ def read_file(file_path):
 
 
 def log_command(line):
+    """
+    Helper function that writes any comments present in input.txt to log.txt
+    
+    Args: line (string to be written to log.txt)
+
+    Returns: null
+    """
     with open('log.txt', 'a') as f:
         f.write(line.rstrip() + "\n")
 
 def get_h(file):
+    """
+    Helper to be used in animation.py that tells animation.py how big the highlighted boundaries will be
+    
+    Args: file (to read h)
+
+    Returns: h (int, grid will be of size 2^h x 2^h)
+    """
     with open(file, "r", encoding="utf-8") as file:
         for line in file:
             l = line.split(" ")
