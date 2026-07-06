@@ -96,14 +96,20 @@ class quadTree:
                 if child.boundary.int_segment(seg):
                     self._insert(child, seg)
 
-    def range_report(self, rectangle):
+    def range_report(self, rectangle, log_path="log.txt"):
         results = set()
 
-        self._range_report(self.root, rectangle, results)
+        x1, y1, x2, y2 = rectangle.x_min, rectangle.y_min, rectangle.x_max, rectangle.y_max
+
+        with open(log_path, "a") as log_file:
+            log_file.write(
+            f"RangeReporting was called with parameters {x1}, {y1}, {x2}, {y2}.\n"
+        )
+        self._range_report(self.root, rectangle, results, log_file) #printing the log file is handled in the recursive function
 
         return results
     
-    def _range_report(self, node, rectangle, results):
+    def _range_report(self, node, rectangle, results, log_file):
 
         if node is None:
             return
@@ -113,20 +119,41 @@ class quadTree:
         if not node.boundary.int_rectangle(rectangle):
             return
         
+        x1, y1, x2, y2 = rectangle.x_min, rectangle.y_min, rectangle.x_max, rectangle.y_max
+        
         for seg in node.segments:
 
             if seg.int_rectangle(rectangle):
                 if seg not in results:
                     results.add(seg)
 
+                    if self.anim:              
+                        self.anim.highlight_segment(seg)
+
+                    log_file.write(
+                        f"reporting segment {seg.name} whose coordinates are "
+                        f"{seg.x1} {seg.y} {seg.x2}. It intersects the query region "
+                        f"{x1} {y1} {x2} {y2}\n"
+                )
+
         if not node.is_leaf:
 
             for child in node.children:
-                self._range_report(child, rectangle, results)
+                self._range_report(child, rectangle, results, log_file)
 
-    def range_count(self, rectangle): 
+    def range_count(self, rectangle, log_path="log.txt"):
         seen = set()
-        return self._range_count(self.root, rectangle, seen)
+        count = self._range_count(self.root, rectangle, seen)
+
+        x1, y1, x2, y2 = rectangle.x_min, rectangle.y_min, rectangle.x_max, rectangle.y_max
+
+        with open(log_path, "a") as log_file:
+            log_file.write(
+            f"RangeCounting was called with parameters {x1} {y1} {x2} {y2}. "
+            f"We found {count} endpoints of segments inside the query region.\n"
+        )
+
+        return count
     
     def _range_count(self, node, rectangle, seen):
         if node is None:

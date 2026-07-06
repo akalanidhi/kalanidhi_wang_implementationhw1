@@ -31,6 +31,8 @@ class Segment:
     since the segment is horizontal, the y-coordinate is constant across its entire length.
     segments are stored by index in the global SegmentArray; nodes reference them by index.
     """
+    _counter = 0  # class-level counter to name segments s0, s1, s2, ...
+
     def __init__(self, x1, x2, y):
         """
         initializes a horizontal Segment with left endpoint x1, right endpoint x2, and height y.
