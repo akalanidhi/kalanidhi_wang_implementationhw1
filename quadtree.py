@@ -51,17 +51,7 @@ class quadTree:
         # Segment does not intersect this node's region
         if not node.boundary.int_segment(segment):
             return
-        """
-        # Update endpoint count for this node
-        left = Point(segment.x1, segment.y)
-        right = Point(segment.x2, segment.y)
 
-        if node.boundary.cont_point(left):
-            node.endpoint_count += 1
-
-        if node.boundary.cont_point(right):
-            node.endpoint_count += 1
-        """
         if node.is_leaf:
 
             # Leaf has room
@@ -101,11 +91,22 @@ class quadTree:
 
         if node.is_leaf:
             total = 0
+
             for seg in node.segments:
-                if node.boundary.cont_point(Point(seg.x1, seg.y)):
-                    total += 1
-                if node.boundary.cont_point(Point(seg.x2, seg.y)):
-                    total += 1
+
+                # Degenerate segment (a single point)
+                if seg.x1 == seg.x2:
+                    if node.boundary.cont_point(Point(seg.x1, seg.y)):
+                        total += 1
+
+                # Normal segment
+                else:
+                    if node.boundary.cont_point(Point(seg.x1, seg.y)):
+                        total += 1
+
+                    if node.boundary.cont_point(Point(seg.x2, seg.y)):
+                        total += 1
+
             node.endpoint_count = total
             return total
 

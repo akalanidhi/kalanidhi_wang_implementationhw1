@@ -1,62 +1,56 @@
-RangeReporting was called with parameters 69, 165, 363, 389.
-reporting segment 8 whose coordinates are 129 322 239. It intersects the query region 69 165 363 389
-reporting segment 5 whose coordinates are 90 250 235. It intersects the query region 69 165 363 389
-reporting segment 9 whose coordinates are 82 209 323. It intersects the query region 69 165 363 389
-RangeReporting was called with parameters 303, 176, 306, 178.
-RangeReporting was called with parameters 39, 155, 352, 310.
-reporting segment 5 whose coordinates are 90 250 235. It intersects the query region 39 155 352 310
-reporting segment 9 whose coordinates are 82 209 323. It intersects the query region 39 155 352 310
-RangeReporting was called with parameters 76, 67, 408, 223.
-reporting segment 9 whose coordinates are 82 209 323. It intersects the query region 76 67 408 223
-reporting segment 7 whose coordinates are 200 100 300. It intersects the query region 76 67 408 223
-RangeReporting was called with parameters 54, 148, 375, 372.
+% Welcome to our quadtree implementation!
+% Instructions: Please update all user inputs in input.txt
+% PUT SPACES IN BETWEEN ALL VALUES
+% To insert a segment, create a new line, type "i", and then your x1, x2, and y coordinates with SPACES in between everything
+% To generate a report, create a new line, type "r", and then your x1, y1, x2, and y2 coordinates representing the rectangle for the report. Remember the spaces!
+% To generate a count query, create a new line, type "q", and then your x1, y2, x2, and y2 coordinates representing the rectangle for the report, w/ spaces.
+% Welcome to our quadtree implementation!
+% Instructions: Please update all user inputs in input.txt
+% PUT SPACES IN BETWEEN ALL VALUES
+% To insert a segment, create a new line, type "i", and then your x1, x2, and y coordinates with SPACES in between everything
+% To generate a report, create a new line, type "r", and then your x1, y1, x2, and y2 coordinates representing the rectangle for the report. Remember the spaces!
+% To generate a count query, create a new line, type "q", and then your x1, y2, x2, and y2 coordinates representing the rectangle for the report, w/ spaces.
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
-A quadrant with LL=(0, 257) and UR=(256, 512) was called
-reporting segment 8 whose coordinates are 129 322 239. It intersects the query region 54 148 375 372
-A quadrant with LL=(257, 257) and UR=(512, 512) was called
+A quadrant with LL=(0, 0) and UR=(512, 512) was called
+A quadrant with LL=(0, 0) and UR=(512, 512) was called
+A quadrant with LL=(0, 0) and UR=(512, 512) was called
 A quadrant with LL=(0, 0) and UR=(256, 256) was called
-A quadrant with LL=(0, 129) and UR=(128, 256) was called
-reporting segment 5 whose coordinates are 90 250 235. It intersects the query region 54 148 375 372
-reporting segment 9 whose coordinates are 82 209 323. It intersects the query region 54 148 375 372
-A quadrant with LL=(129, 129) and UR=(256, 256) was called
-A quadrant with LL=(0, 0) and UR=(128, 128) was called
-A quadrant with LL=(129, 0) and UR=(256, 128) was called
 A quadrant with LL=(257, 0) and UR=(512, 256) was called
-RangeReporting was called with parameters 107, 172, 363, 279.
-A quadrant with LL=(0, 0) and UR=(512, 512) was called
+A quadrant with LL=(0, 0) and UR=(256, 256) was called
 A quadrant with LL=(0, 257) and UR=(256, 512) was called
 A quadrant with LL=(257, 257) and UR=(512, 512) was called
 A quadrant with LL=(0, 0) and UR=(256, 256) was called
-A quadrant with LL=(0, 129) and UR=(128, 256) was called
-reporting segment 5 whose coordinates are 90 250 235. It intersects the query region 107 172 363 279
-reporting segment 9 whose coordinates are 82 209 323. It intersects the query region 107 172 363 279
-A quadrant with LL=(129, 129) and UR=(256, 256) was called
-A quadrant with LL=(0, 0) and UR=(128, 128) was called
-A quadrant with LL=(129, 0) and UR=(256, 128) was called
 A quadrant with LL=(257, 0) and UR=(512, 256) was called
+RangeReporting was called with parameters 100, 100, 200, 200.
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
 A quadrant with LL=(0, 257) and UR=(256, 512) was called
 A quadrant with LL=(257, 257) and UR=(512, 512) was called
 A quadrant with LL=(0, 0) and UR=(256, 256) was called
-A quadrant with LL=(0, 129) and UR=(128, 256) was called
-A quadrant with LL=(129, 129) and UR=(256, 256) was called
-A quadrant with LL=(0, 0) and UR=(128, 128) was called
-A quadrant with LL=(129, 0) and UR=(256, 128) was called
+reporting segment 7 whose coordinates are 200 100 300. It intersects the query region 100 100 200 200
 A quadrant with LL=(257, 0) and UR=(512, 256) was called
-RangeCounting was called with parameters 207 159 379 274. We found 2 endpoints of segments inside the query region.
+A quadrant with LL=(0, 0) and UR=(512, 512) was called
+A quadrant with LL=(0, 257) and UR=(256, 512) was called
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
 A quadrant with LL=(0, 257) and UR=(256, 512) was called
 A quadrant with LL=(257, 257) and UR=(512, 512) was called
 A quadrant with LL=(0, 0) and UR=(256, 256) was called
 A quadrant with LL=(257, 0) and UR=(512, 256) was called
-RangeCounting was called with parameters 284 147 374 371. We found 1 endpoints of segments inside the query region.
+RangeCounting was called with parameters 126 323 169 362. We found 2 endpoints of segments inside the query region.
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
 A quadrant with LL=(0, 257) and UR=(256, 512) was called
 A quadrant with LL=(257, 257) and UR=(512, 512) was called
 A quadrant with LL=(0, 0) and UR=(256, 256) was called
-A quadrant with LL=(0, 129) and UR=(128, 256) was called
-A quadrant with LL=(129, 129) and UR=(256, 256) was called
-A quadrant with LL=(0, 0) and UR=(128, 128) was called
-A quadrant with LL=(129, 0) and UR=(256, 128) was called
 A quadrant with LL=(257, 0) and UR=(512, 256) was called
-RangeCounting was called with parameters 10 22 426 314. We found 9 endpoints of segments inside the query region.
+RangeCounting was called with parameters 114 310 193 384. We found 2 endpoints of segments inside the query region.
+A quadrant with LL=(0, 0) and UR=(512, 512) was called
+A quadrant with LL=(0, 257) and UR=(256, 512) was called
+A quadrant with LL=(257, 257) and UR=(512, 512) was called
+A quadrant with LL=(0, 0) and UR=(256, 256) was called
+A quadrant with LL=(257, 0) and UR=(512, 256) was called
+RangeCounting was called with parameters 116 331 164 408. We found 2 endpoints of segments inside the query region.
+A quadrant with LL=(0, 0) and UR=(512, 512) was called
+A quadrant with LL=(0, 257) and UR=(256, 512) was called
+A quadrant with LL=(257, 257) and UR=(512, 512) was called
+A quadrant with LL=(0, 0) and UR=(256, 256) was called
+A quadrant with LL=(257, 0) and UR=(512, 256) was called
+RangeCounting was called with parameters 116 329 180 389. We found 2 endpoints of segments inside the query region.
