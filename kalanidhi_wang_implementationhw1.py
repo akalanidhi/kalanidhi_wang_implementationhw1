@@ -53,7 +53,7 @@ class GameState:
 
         self.world_size = 0
         self.toolbox_width = 220
-        self.status_height = 40
+        self.status_height = 65
 
 
 
@@ -312,12 +312,6 @@ def draw(state):
         status_y = state.world_size
         button_area_height = 35
         status_text_area_y = state.world_size + button_area_height
-
-        pygame.draw.rect(
-            screen,
-            (230, 230, 230),
-            (0, state.world_size, state.world_size, state.status_height)
-        )
 
         pygame.draw.line(
             screen,
