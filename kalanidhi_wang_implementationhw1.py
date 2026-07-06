@@ -23,6 +23,10 @@ class Mode(Enum):
     COUNT = 4
 
 class GameState:
+    """
+    holds all state for the running program: current mode, the quadtree,
+    the pygame screen, toolbar buttons, and in-progress click tracking.
+    """
 
     def __init__(self):
 
@@ -38,7 +42,8 @@ class GameState:
         self.screen = None
         self.tree = None
 
-        self.h = 0
+        # height of the quadtree; world size is 2 ** tree_height
+        self.tree_height = 0
 
         # Used for REPORT mode
         self.first_click = None
@@ -54,7 +59,7 @@ class GameState:
         self.world_size = 0
         self.toolbox_width = 220
         self.status_height = 65
-        self.button_area_height = 0  # NEW
+        self.button_area_height = 0  # set once we know layout in load_data
 
 
 
@@ -63,14 +68,13 @@ def load_data(state):
     """
     Loads data from "input.txt"
 
-    Args: state
-
-    Returns: nothing, but sets initial h, as well as SegmentArray
+        Args: state
+        eturns: nothing, but sets initial tree_height, as well as SegmentArray
     """
 
-    h, SegmentArray, initial_reports, initial_queries, error = parser.read_file("input.txt")
+    tree_height, SegmentArray, initial_reports, initial_queries, error = parser.read_file("input.txt")
 
-    state.h = h
+    state.tree_height = tree_height
     state.initial_reports = initial_reports
     state.initial_queries = initial_queries
 
@@ -83,19 +87,19 @@ def load_data(state):
 
         return
 
-    state.world_size = 2 ** h
+    state.world_size = 2 ** tree_height
 
-    button_area_height = 35  # NEW: reserve space for buttons below the status bar
+    button_area_height = 35  # reserve space for buttons below the status bar
     state.button_area_height = button_area_height
 
     width = state.world_size
-    height = state.world_size + state.status_height + button_area_height  # UPDATED
+    height = state.world_size + state.status_height + button_area_height
 
     state.screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption("Quadtree Visualization")    
 
     # Root boundary
-    boundary = geometry.Rectangle(0,2 ** h,0,2 ** h)
+    boundary = geometry.Rectangle(0,2 ** tree_height,0,2 ** tree_height)
 
     state.tree = quadtree.quadTree(boundary, anim=state.anim)
 
@@ -115,7 +119,7 @@ def load_data(state):
         state.anim.toggle_animation()
         print("Animation toggled")
 
-    y = state.world_size + state.status_height + 5  # UPDATED: below status bar, not inside it
+    y = state.world_size + state.status_height + 5  # below status bar, not inside it
     btn_w = 120
     btn_h = 25
     gap = 10
@@ -137,8 +141,8 @@ def process_initial_commands(state):
     """
     Processes all intial reports and queries from the input.txt file
 
-    Args: state
-    Returns: nothing, but does current reports and queries
+        Args: state
+        Returns: nothing, but does current reports and queries
     """
     print("Initial reports")
     for rect in state.initial_reports:
@@ -155,29 +159,23 @@ def process_initial_commands(state):
 def handle_keyboard(event, state):
     """
     Takes keyboard inputs and updates to proper mode, clearing rectangles on screen (if needed)
-    
-    Args: the event detected by pygame, state
-
-    Returns: null
+        Args: the event detected by pygame, state
+        Returns: null
     """
 
     if event.key == pygame.K_i:
-        mode = Mode.INSERT
         print("Switched to INSERT mode.")
         state.mode = Mode.INSERT
         reset_query_state(state)
     if event.key == pygame.K_r:
-        mode = Mode.REPORT
         print("Switched to REPORT mode.")
         state.mode = Mode.REPORT
     if event.key == pygame.K_q:
-        mode = Mode.COUNT
         print("Switched to COUNT mode.")
         state.mode = Mode.COUNT
     elif event.key == pygame.K_ESCAPE:
         state.mode = Mode.NORMAL
         print("Switched to NORMAL mode")
-        mode = Mode.NORMAL
         reset_query_state(state)
     if event.key == pygame.K_a:
         state.anim.toggle_animation()
@@ -185,10 +183,8 @@ def handle_keyboard(event, state):
 def handle_mouse(event, state):
     """
     Handles mouse to find correct position of mouse when clicked for queries and new segments
-
-    Args: event detected by pygame
-
-    Returns: null
+        Args: event detected by pygame, state
+        Returns: null
     """
 
     if state.mode == Mode.ERROR:
@@ -294,6 +290,8 @@ def handle_mouse(event, state):
 def draw(state):
     """
     Draws error screen (if input.txt is not correct), status, and query rectangle if in use
+
+    Also handles drawing the toolbar buttons on top of everything else.
     """
     screen = state.screen
     screen.fill(WHITE)
@@ -342,7 +340,6 @@ def reset_query_state(state):
     Helper function to clear any rectangle on screen for when in normal or insert  mode
     
     Args: state
-
     Returns: null
     """
     state.query_rect = None
@@ -352,9 +349,11 @@ def reset_query_state(state):
 def update(state):
     """
     Helper function to update the state when needed
+
+    Currently just advances the animation manager one tick, so highlighted
+    segments can fade or progress between frames.
     
     Args: state
-
     Returns: null
     """
     state.anim.update() 
@@ -364,7 +363,6 @@ def game_loop(state):
     Keeps the game state updated, watching for events such as quit, key presses, or mouse clicks 
     
     Args: state
-
     Returns: null
     """
 
@@ -398,7 +396,6 @@ def main():
     Main function. Opens file, creates the state, loads the data, and loops the state
     
     Args: N/A
-
     Returns: null
     """
     with open("log.txt",'w') as file:

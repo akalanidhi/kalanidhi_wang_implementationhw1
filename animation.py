@@ -11,10 +11,16 @@ SEGMENT_HIGHLIGHT_WIDTH = 4                     #thicker line so a segment is ea
 
 
 class AnimationManager:
+    """
+    tracks and draws temporary highlights for quadrants and segments that
+    were touched during a query, along with logging every visited quadrant
+    to a file. animation can be toggled on/off without losing this state.
+    """
+
     def __init__(self, log_file_path="log.txt"):
-        """ Initializes the animation manager, handling all highlights of nodes and segments
+        """ initializes the animation manager, handling all highlights of nodes and segments
     
-        Args: 
+        args: 
         log_file_path: where outputs are being written to
         """
         self.animation_on = True  # spec: must start ON
@@ -25,22 +31,24 @@ class AnimationManager:
 
     def close(self):
         """
-        Helper function that closes whichever file is open and being written to
+        helper function that closes whichever file is open and being written to.
+        should be called when the program exits so the log is flushed and released.
         """
         self._log_file.close()
 
     def toggle_animation(self):
-        """Helper function that toggles animation mode
+        """helper function that toggles animation mode.
+        when off, highlighting and logging are skipped entirely elsewhere.
         """
         self.animation_on = not self.animation_on
 
     def print_and_highlight_quadrant(self, x1, y1, x2, y2):
         """
-        If animation is OFF: no-op.
-        If ON: log the visit, and if the quad is on-screen, queue it to
+        if animation is off: no-op.
+        if on: log the visit, and if the quad is on-screen, queue it to
         blink for a few frames.
 
-        Args:
+        args:
         x1, x2, y1, y2: dimensions of quadrant box being called upon
         """
         if not self.animation_on:
@@ -60,10 +68,10 @@ class AnimationManager:
 
     def highlight_segment(self, segment): 
         """
-        If animation is OFF: no-op.
-        If ON: queue this segment to blink for HIGHLIGHT_FRAMES frames.
+        if animation is off: no-op.
+        if on: queue this segment to blink for highlight_frames frames.
         
-        Args: segment to be highlighted (if animation mode is on)
+        args: segment to be highlighted (if animation mode is on)
         """
         if not self.animation_on:
             return
@@ -73,7 +81,10 @@ class AnimationManager:
         })
 
     def update(self):
-        """Call once per frame to age out expired highlights."""
+        """call once per frame to age out expired highlights.
+        decrements each highlight's remaining frame count and drops any
+        quad or segment highlight once it hits zero.
+        """
         for q in self._highlighted_quads:
             q["frames_left"] -= 1
         self._highlighted_quads = [q for q in self._highlighted_quads if q["frames_left"] > 0]
@@ -83,7 +94,10 @@ class AnimationManager:
         self._highlighted_segments = [s for s in self._highlighted_segments if s["frames_left"] > 0]
 
     def draw_highlights(self, screen):
-        """Draw all currently-highlighted quadrants. Call after your normal draw()."""
+        """draw all currently-highlighted quadrants. call after your normal draw().
+        also draws any blinking segment highlights on top, clipping both to
+        the visible world bounds so nothing draws off-screen.
+        """
         if not self.animation_on:
             return
 
@@ -108,8 +122,9 @@ class AnimationManager:
                 SEGMENT_HIGHLIGHT_WIDTH
             )
 
-
     def clear_highlights(self):
-        """Clear all currently-highlighted quadrants and segments. Call at the start of each frame."""
+        """clear all currently-highlighted quadrants and segments. call at the start of each frame.
+        useful for resetting state between separate queries so old highlights don't linger.
+        """
         self._highlighted_quads.clear()
         self._highlighted_segments.clear()
