@@ -4,12 +4,6 @@
 % To insert a segment, create a new line, type "i", and then your x1, x2, and y coordinates with SPACES in between everything
 % To generate a report, create a new line, type "r", and then your x1, y1, x2, and y2 coordinates representing the rectangle for the report. Remember the spaces!
 % To generate a count query, create a new line, type "q", and then your x1, y2, x2, and y2 coordinates representing the rectangle for the report, w/ spaces.
-% Welcome to our quadtree implementation!
-% Instructions: Please update all user inputs in input.txt
-% PUT SPACES IN BETWEEN ALL VALUES
-% To insert a segment, create a new line, type "i", and then your x1, x2, and y coordinates with SPACES in between everything
-% To generate a report, create a new line, type "r", and then your x1, y1, x2, and y2 coordinates representing the rectangle for the report. Remember the spaces!
-% To generate a count query, create a new line, type "q", and then your x1, y2, x2, and y2 coordinates representing the rectangle for the report, w/ spaces.
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
@@ -26,25 +20,33 @@ A quadrant with LL=(0, 0) and UR=(512, 512) was called
 A quadrant with LL=(0, 257) and UR=(256, 512) was called
 A quadrant with LL=(257, 257) and UR=(512, 512) was called
 A quadrant with LL=(0, 0) and UR=(256, 256) was called
-reporting segment 7 whose coordinates are 200 100 300. It intersects the query region 100 100 200 200
+reporting segment 3 whose coordinates are 200 100 300. It intersects the query region 100 100 200 200
 A quadrant with LL=(257, 0) and UR=(512, 256) was called
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
-A quadrant with LL=(0, 257) and UR=(256, 512) was called
+A quadrant with LL=(0, 0) and UR=(256, 256) was called
+A quadrant with LL=(0, 0) and UR=(128, 128) was called
+A quadrant with LL=(129, 0) and UR=(256, 128) was called
+A quadrant with LL=(0, 129) and UR=(128, 256) was called
+A quadrant with LL=(129, 129) and UR=(256, 256) was called
+A quadrant with LL=(129, 0) and UR=(256, 128) was called
+A quadrant with LL=(0, 129) and UR=(128, 256) was called
+A quadrant with LL=(129, 129) and UR=(256, 256) was called
+A quadrant with LL=(257, 0) and UR=(512, 256) was called
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
 A quadrant with LL=(0, 257) and UR=(256, 512) was called
 A quadrant with LL=(257, 257) and UR=(512, 512) was called
-A quadrant with LL=(0, 0) and UR=(256, 256) was called
-A quadrant with LL=(257, 0) and UR=(512, 256) was called
-RangeCounting was called with parameters 67 341 96 389. We found 1 endpoints of segments inside the query region.
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
 A quadrant with LL=(0, 257) and UR=(256, 512) was called
 A quadrant with LL=(257, 257) and UR=(512, 512) was called
-A quadrant with LL=(0, 0) and UR=(256, 256) was called
-A quadrant with LL=(257, 0) and UR=(512, 256) was called
-RangeCounting was called with parameters 34 322 125 406. We found 1 endpoints of segments inside the query region.
+RangeReporting was called with parameters 53, 328, 385, 439.
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
 A quadrant with LL=(0, 257) and UR=(256, 512) was called
+reporting segment 5 whose coordinates are 108 362 340. It intersects the query region 53 328 385 439
+reporting segment 6 whose coordinates are 198 416 293. It intersects the query region 53 328 385 439
 A quadrant with LL=(257, 257) and UR=(512, 512) was called
 A quadrant with LL=(0, 0) and UR=(256, 256) was called
 A quadrant with LL=(257, 0) and UR=(512, 256) was called
-RangeCounting was called with parameters 19 205 139 416. We found 2 endpoints of segments inside the query region.
+RangeReporting was called with parameters 124, 318, 466, 397.
+reporting segment 5 whose coordinates are 108 362 340. It intersects the query region 124 318 466 397
+RangeReporting was called with parameters 80, 229, 198, 336.
+reporting segment 1 whose coordinates are 90 250 235. It intersects the query region 80 229 198 336

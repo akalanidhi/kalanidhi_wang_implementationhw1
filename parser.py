@@ -19,7 +19,6 @@ def read_file(file_path):
         init_reports = []
         init_queries = []
         for line in file:
-            print(line)
             split_line = line.split(" ")
             if split_line[0] == "%":
                 log_command(line)
@@ -52,5 +51,9 @@ def log_command(line):
         f.write(line.rstrip() + "\n")
 
 def get_h(file):
-    h, _, _, _, _ = read_file(file)
-    return h
+    with open(file, "r", encoding="utf-8") as file:
+        for line in file:
+            l = line.split(" ")
+            if len(l) == 1:
+                try: return int(l[0])
+                except: pass
