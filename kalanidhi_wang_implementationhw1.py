@@ -90,7 +90,7 @@ def process_initial_commands(state):
     for rect in state.initial_queries:
         print(f"Query point: ({rect})")
         results = state.tree.range_count(rect)
-        print(f"Node contains {len(results)} endpoints.")
+        print(f"Node contains {results} endpoints.")
     
 
 def handle_keyboard(event, state):
