@@ -78,7 +78,14 @@ def load_data(state):
 
         return
 
-    state.screen = visualization.create_window(2 ** h,"Quadtree Visualization")
+    WORLD_SIZE = 2 ** h
+    TOOLBOX_WIDTH = 200
+
+    state.world_size = WORLD_SIZE
+    state.toolbox_width = TOOLBOX_WIDTH
+
+    state.screen = pygame.display.set_mode((WORLD_SIZE + TOOLBOX_WIDTH, WORLD_SIZE))
+    pygame.display.set_caption("Quadtree Visualization")
 
     # Root boundary
     boundary = geometry.Rectangle(0,2 ** h,0,2 ** h)
@@ -101,13 +108,14 @@ def load_data(state):
         state.anim.toggle_animation()
         print("Animation toggled")
 
-    state.buttons = [
-        Button(10, 10, 120, 35, "INSERT", set_insert),
-        Button(140, 10, 120, 35, "REPORT", set_report),
-        Button(270, 10, 120, 35, "COUNT", set_count),
-        Button(400, 10, 160, 35, "TOGGLE ANIM", toggle_anim)
-    ]
+    x_offset = state.world_size + 20
 
+    state.buttons = [
+    Button(x_offset, 20, 160, 35, "INSERT", set_insert),
+    Button(x_offset, 70, 160, 35, "REPORT", set_report),
+    Button(x_offset, 120, 160, 35, "COUNT", set_count),
+    Button(x_offset, 170, 160, 35, "ANIMATION", toggle_anim),
+]
 
     # Insert all segments from file
     for segment in SegmentArray:
@@ -252,6 +260,7 @@ def handle_mouse(event, state):
 
             state.first_click = None
 
+    
 
 def draw(state):
     """
@@ -298,6 +307,16 @@ def draw(state):
             segments=state.tree.count_segments()
         )
     
+    pygame.draw.rect(
+        screen,
+        (240, 240, 240),
+        (state.world_size, 0, state.toolbox_width, state.world_size)
+)
+    
+    screen.set_clip((0, 0, state.world_size, state.world_size))
+    state.tree.draw(screen)
+    screen.set_clip(None)
+
     for button in state.buttons:
         button.draw(screen)
 
