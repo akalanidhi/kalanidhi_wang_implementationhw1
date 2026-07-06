@@ -350,10 +350,18 @@ class quadTree:
     def find(self, point):
         """External function that allows you to find where a point is in the quadtree
         Args:
-        point: point to be found within the quadtree"""
+        point: point to be found within the quadtree
+        
+        Returns:
+        node where the point exists"""
         return self._find(self.root, point)
 
     def _find(self, node, point):
+        """Internal function that searches through the quadtree to find the point
+        
+        Args: 
+        node: root of quadtree to be searched
+        point: point to be found within quadtree"""
 
         if node is None:
             return None
@@ -377,9 +385,13 @@ class quadTree:
 
 
     def clear_highlights(self):
+        """Helper function that clears all highlighted quadrants using the animation file"""
         self.anim._highlighted_quads.clear()
 
     def _highlight_node(self, node):
+        """Function that highlights all boundaries of a node if animation mode is turned on
+        Args:
+        node: node to be highlighted"""
         if self.anim:
             b = node.boundary
             self.anim.print_and_highlight_quadrant(b.x_min, b.y_min, b.x_max, b.y_max)
@@ -388,9 +400,14 @@ class quadTree:
             return
         
     def print_tree(self):
+        """Externally accessed function to print the entire quadtree"""
         self._print(self.root)
 
     def _print(self, node):
+        """Internal function to print all nodes and how many segments they contain within a quadtree.
+        
+        Args:
+        node: Root of quadtree to be printed """
 
         if node is None:
             return
@@ -406,46 +423,7 @@ class quadTree:
             self._print(child)
 
     def count_segments(self):
+        """Helper function that returns how many segments are within the tree
+        Returns:
+        int: number of segments within the quadtree"""
         return self.segment_count
-    
-    def check_duplicates(self):
-        counts = {}
-
-        def dfs(node):
-            if node is None:
-                return
-
-            for seg in node.segments:
-                key = (seg.x1, seg.x2, seg.y)
-                counts[key] = counts.get(key, 0) + 1
-
-            for child in node.children:
-                dfs(child)
-
-        dfs(self.root)
-
-        for seg, c in counts.items():
-            print(seg, c)
-
-    def print_segment_locations(self):
-        self._print_segment_locations(self.root)
-
-    def _print_segment_locations(self, node):
-        if node is None:
-            return
-
-        if node.is_leaf:
-            for seg in node.segments:
-                print(
-                    id(seg),
-                    seg.x1, seg.x2, seg.y,
-                    "leaf:",
-                    node.boundary.x_min,
-                    node.boundary.x_max,
-                    node.boundary.y_min,
-                    node.boundary.y_max,
-                )
-
-        else:
-            for child in node.children:
-                self._print_segment_locations(child)
