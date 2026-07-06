@@ -210,23 +210,19 @@ class quadTree:
 
         # leaf
         if node.is_leaf:
-
             total = 0
-
             for seg in node.segments:
-                if id(seg) in seen:
-                    continue
-                seen.add(id(seg))
+                left = Point(seg.x1, seg.y)
+                right = Point(seg.x2, seg.y)
 
-                if rectangle.cont_point(
-                    Point(seg.x1, seg.y)
-                ):
-                    total += 1
-
-                if rectangle.cont_point(
-                    Point(seg.x2, seg.y)
-                ):
-                    total += 1
+                if seg.x1 == seg.x2:
+                    if node.boundary.cont_point(left) and rectangle.cont_point(left):
+                        total += 1
+                else: 
+                    if node.boundary.cont_point(left) and rectangle.cont_point(left):
+                        total += 1
+                    if node.boundary.cont_point(right) and rectangle.cont_point(right):
+                        total += 1
 
             return total
 

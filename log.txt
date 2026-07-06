@@ -35,22 +35,16 @@ A quadrant with LL=(0, 257) and UR=(256, 512) was called
 A quadrant with LL=(257, 257) and UR=(512, 512) was called
 A quadrant with LL=(0, 0) and UR=(256, 256) was called
 A quadrant with LL=(257, 0) and UR=(512, 256) was called
-RangeCounting was called with parameters 126 323 169 362. We found 2 endpoints of segments inside the query region.
+RangeCounting was called with parameters 67 341 96 389. We found 1 endpoints of segments inside the query region.
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
 A quadrant with LL=(0, 257) and UR=(256, 512) was called
 A quadrant with LL=(257, 257) and UR=(512, 512) was called
 A quadrant with LL=(0, 0) and UR=(256, 256) was called
 A quadrant with LL=(257, 0) and UR=(512, 256) was called
-RangeCounting was called with parameters 114 310 193 384. We found 2 endpoints of segments inside the query region.
+RangeCounting was called with parameters 34 322 125 406. We found 1 endpoints of segments inside the query region.
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
 A quadrant with LL=(0, 257) and UR=(256, 512) was called
 A quadrant with LL=(257, 257) and UR=(512, 512) was called
 A quadrant with LL=(0, 0) and UR=(256, 256) was called
 A quadrant with LL=(257, 0) and UR=(512, 256) was called
-RangeCounting was called with parameters 116 331 164 408. We found 2 endpoints of segments inside the query region.
-A quadrant with LL=(0, 0) and UR=(512, 512) was called
-A quadrant with LL=(0, 257) and UR=(256, 512) was called
-A quadrant with LL=(257, 257) and UR=(512, 512) was called
-A quadrant with LL=(0, 0) and UR=(256, 256) was called
-A quadrant with LL=(257, 0) and UR=(512, 256) was called
-RangeCounting was called with parameters 116 329 180 389. We found 2 endpoints of segments inside the query region.
+RangeCounting was called with parameters 19 205 139 416. We found 2 endpoints of segments inside the query region.
