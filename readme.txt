@@ -1,7 +1,5 @@
 Welcome to our quadtree implementation!
 
-For best visualization, use h=9 (all values work, but some text gets cut off otherwise)
-
 This code requires the pygame library to be installed for visualization purposes.
 
 When inputting inital coordinates, please alter the input.txt file to do so. PUT SPACES IN BETWEEN ALL VALUES

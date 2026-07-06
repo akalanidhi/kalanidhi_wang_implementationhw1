@@ -55,8 +55,6 @@ class GameState:
         self.toolbox_width = 220
         self.status_height = 40
 
-        self.query_history = []
-
 
 
 
@@ -246,21 +244,8 @@ def handle_mouse(event, state):
 
             ymin = min(state.first_click.y, second.y)
             ymax = max(state.first_click.y, second.y)
-            if xmin != state.first_click.x or ymin == state.first_click.y:
-                print("ERROR: RECTANGLE DOES NOT GO FROM BOTTOM LEFT TO TOP RIGHT")
-                state.first_click = None
-                return
 
             state.query_rect = geometry.Rectangle(xmin,xmax,ymin,ymax)
-            
-            
-            MAX_HISTORY = 10
-
-            state.query_history.append(state.query_rect)
-
-            if len(state.query_history) > MAX_HISTORY:
-                state.query_history.pop(0)  
-
 
             results = state.tree.range_report(state.query_rect)
             print(f"Found {len(results)} segments.")
@@ -278,29 +263,14 @@ def handle_mouse(event, state):
 
             second = geometry.Point(x, y)
            
-            
+
             xmin = min(state.first_click.x, second.x)
             xmax = max(state.first_click.x, second.x)
 
             ymin = min(state.first_click.y, second.y)
             ymax = max(state.first_click.y, second.y)
 
-            if xmin != state.first_click.x or ymin == state.first_click.y:
-                print("ERROR: RECTANGLE DOES NOT GO FROM BOTTOM LEFT TO TOP RIGHT")
-                print(f"{xmin},{ymin},{xmax},{ymax}")
-                state.first_click = None
-                return
-
             state.query_rect = geometry.Rectangle(xmin,xmax,ymin,ymax)
-
-
-            MAX_HISTORY = 10
-
-            state.query_history.append(state.query_rect)
-
-            if len(state.query_history) > MAX_HISTORY:
-                state.query_history.pop(0)  
-
 
             results = state.tree.range_count(state.query_rect)
             print(f"Found {results} endpoints.")
@@ -367,13 +337,6 @@ def draw(state):
 
     for button in state.buttons:
         button.draw(screen)
-    
-    for rect in state.query_history:
-        visualization.draw_rectangle(
-        screen,
-        rect,
-        color=(200, 200, 200)
-    )
 
     pygame.display.flip()
 
