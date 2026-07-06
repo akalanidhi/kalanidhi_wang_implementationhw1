@@ -37,9 +37,9 @@ def draw_quadtree(screen, node):
 STATUS_HEIGHT = 30
 
 
-def draw_status(screen, mode, animation, nodes, segments):
+def draw_status(screen, mode, animation, nodes, segments, y):
     """
-    Draws the status bar at the bottom of the window.
+    Draws the status bar starting at the given y-coordinate.
 
     Args:
         screen: Pygame display surface.
@@ -47,24 +47,24 @@ def draw_status(screen, mode, animation, nodes, segments):
         animation: True if animation is enabled.
         nodes: Total number of nodes in the quadtree.
         segments: Total number of stored segments.
+        y: The y-coordinate where the status bar begins (top edge).
     """
 
     width = screen.get_width()
-    height = screen.get_height()
 
     # Background
     pygame.draw.rect(
         screen,
         (230, 230, 230),
-        (0, height - STATUS_HEIGHT, width, STATUS_HEIGHT)
+        (0, y, width, STATUS_HEIGHT)
     )
 
     # Top border
     pygame.draw.line(
         screen,
         (150, 150, 150),
-        (0, height - STATUS_HEIGHT),
-        (width, height - STATUS_HEIGHT),
+        (0, y),
+        (width, y),
         1
     )
 
@@ -83,8 +83,7 @@ def draw_status(screen, mode, animation, nodes, segments):
 
     text = font.render(status, True, (0, 0, 0))
 
-    screen.blit(text, (10, height - STATUS_HEIGHT + 6))
-
+    screen.blit(text, (10, y + 6))
 
 def draw_error(screen, message):
     """

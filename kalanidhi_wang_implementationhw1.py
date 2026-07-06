@@ -54,6 +54,7 @@ class GameState:
         self.world_size = 0
         self.toolbox_width = 220
         self.status_height = 40
+        self.button_area_height = 0  # NEW
 
 
 
@@ -84,8 +85,11 @@ def load_data(state):
 
     state.world_size = 2 ** h
 
+    button_area_height = 35  # NEW: reserve space for buttons below the status bar
+    state.button_area_height = button_area_height
+
     width = state.world_size
-    height = state.world_size + state.status_height
+    height = state.world_size + state.status_height + button_area_height  # UPDATED
 
     state.screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption("Quadtree Visualization")    
@@ -111,7 +115,7 @@ def load_data(state):
         state.anim.toggle_animation()
         print("Animation toggled")
 
-    y = state.world_size + 5
+    y = state.world_size + state.status_height + 5  # UPDATED: below status bar, not inside it
     btn_w = 120
     btn_h = 25
     gap = 10
@@ -310,29 +314,14 @@ def draw(state):
             )
 
         status_y = state.world_size
-        button_area_height = 35
-        status_text_area_y = state.world_size + button_area_height
-
-        pygame.draw.rect(
-            screen,
-            (230, 230, 230),
-            (0, state.world_size, state.world_size, state.status_height)
-        )
-
-        pygame.draw.line(
-            screen,
-            (0, 0, 0),
-            (0, status_y),
-            (state.world_size, status_y),
-            2
-        )
 
         visualization.draw_status(
             screen,
             mode=state.mode.name,
             animation=state.anim.animation_on,
             nodes=state.tree.count_nodes(),
-            segments=state.tree.count_segments()
+            segments=state.tree.count_segments(),
+            y=state.world_size
         )
 
     for button in state.buttons:
