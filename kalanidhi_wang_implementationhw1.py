@@ -249,6 +249,11 @@ def handle_mouse(event, state):
             ymin = min(state.first_click.y, second.y)
             ymax = max(state.first_click.y, second.y)
 
+            if xmin != state.first_click.x or ymin == state.first_click.y:
+                print("ERROR: QUERY BOX NOT CHOSEN FROM BOTTOM LEFT TO TOP RIGHT")
+                state.first_click = None
+                return
+
             state.query_rect = geometry.Rectangle(xmin,xmax,ymin,ymax)
 
             results = state.tree.range_report(state.query_rect)
@@ -273,6 +278,10 @@ def handle_mouse(event, state):
 
             ymin = min(state.first_click.y, second.y)
             ymax = max(state.first_click.y, second.y)
+            if xmin != state.first_click.x or ymin == state.first_click.y:
+                print("ERROR: QUERY BOX NOT CHOSEN FROM BOTTOM LEFT TO TOP RIGHT")
+                state.first_click = None
+                return
 
             state.query_rect = geometry.Rectangle(xmin,xmax,ymin,ymax)
 
