@@ -78,14 +78,13 @@ def load_data(state):
 
         return
 
-    WORLD_SIZE = 2 ** h
-    TOOLBOX_WIDTH = 200
+    state.world_size = 2 ** h
 
-    state.world_size = WORLD_SIZE
-    state.toolbox_width = TOOLBOX_WIDTH
+    width = state.world_size + state.toolbox_width
+    height = state.world_size + state.status_height
 
-    state.screen = pygame.display.set_mode((WORLD_SIZE + TOOLBOX_WIDTH, WORLD_SIZE))
-    pygame.display.set_caption("Quadtree Visualization")
+    state.screen = pygame.display.set_mode((width, height))
+    pygame.display.set_caption("Quadtree Visualization")    
 
     # Root boundary
     boundary = geometry.Rectangle(0,2 ** h,0,2 ** h)
@@ -108,13 +107,13 @@ def load_data(state):
         state.anim.toggle_animation()
         print("Animation toggled")
 
-    x_offset = state.world_size + 20
+    x = state.world_size + 20
 
     state.buttons = [
-    Button(x_offset, 20, 160, 35, "INSERT", set_insert),
-    Button(x_offset, 70, 160, 35, "REPORT", set_report),
-    Button(x_offset, 120, 160, 35, "COUNT", set_count),
-    Button(x_offset, 170, 160, 35, "ANIMATION", toggle_anim),
+    Button(x, 20, 180, 35, "INSERT", set_insert),
+    Button(x, 70, 180, 35, "REPORT", set_report),
+    Button(x, 120, 180, 35, "COUNT", set_count),
+    Button(x, 170, 180, 35, "ANIMATION", toggle_anim),
 ]
 
     # Insert all segments from file
@@ -184,6 +183,10 @@ def handle_mouse(event, state):
         return
 
     x, y = event.pos
+
+    # ignore toolbox + status bar clicks
+    if not (0 <= x < state.world_size and 0 <= y < state.world_size):
+        return
 
 
     if state.mode == Mode.INSERT:
@@ -265,14 +268,8 @@ def handle_mouse(event, state):
 def draw(state):
     """
     Draws error screen (if input.txt is not correct), status, and query rectangle if in use
-    
-    Args: State
-
-    Returns: null
     """
-
     screen = state.screen
-
     screen.fill(WHITE)
 
     if state.mode == Mode.ERROR:
@@ -284,21 +281,41 @@ def draw(state):
 
     else:
 
-        # Draw tree
-        state.tree.draw(screen)
+        screen.set_clip((0, 0, state.world_size, state.world_size))
 
+        state.tree.draw(screen)
         state.anim.draw_highlights(screen)
 
-        # Draw query rectangle if one exists
-        if state.query_rect is not None:
+        screen.set_clip(None)
 
+        if state.query_rect is not None:
             visualization.draw_rectangle(
                 screen,
                 state.query_rect,
                 color=(255, 0, 0)
             )
 
-        # Draw status bar
+        pygame.draw.rect(
+            screen,
+            (245, 245, 245),
+            (state.world_size, 0, state.toolbox_width, state.world_size)
+        )
+
+        pygame.draw.line(
+            screen,
+            (0, 0, 0),
+            (state.world_size, 0),
+            (state.world_size, state.world_size),
+            2
+        )
+
+  
+        pygame.draw.rect(
+            screen,
+            (230, 230, 230),
+            (0, state.world_size, state.world_size + state.toolbox_width, state.status_height)
+        )
+
         visualization.draw_status(
             screen,
             mode=state.mode.name,
@@ -306,16 +323,6 @@ def draw(state):
             nodes=state.tree.count_nodes(),
             segments=state.tree.count_segments()
         )
-    
-    pygame.draw.rect(
-        screen,
-        (240, 240, 240),
-        (state.world_size, 0, state.toolbox_width, state.world_size)
-)
-    
-    screen.set_clip((0, 0, state.world_size, state.world_size))
-    state.tree.draw(screen)
-    screen.set_clip(None)
 
     for button in state.buttons:
         button.draw(screen)
