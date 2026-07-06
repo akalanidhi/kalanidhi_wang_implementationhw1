@@ -88,15 +88,6 @@ class quadTree:
             if child.boundary.int_segment(segment):
                 children_hit.append(i)
 
-        print(
-            segment.x1,
-            segment.x2,
-            segment.y,
-            "hits children",
-            children_hit,
-            "at level",
-            node.level,
-        )
 
         for child in node.children:
 

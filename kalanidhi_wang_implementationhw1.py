@@ -207,6 +207,10 @@ def handle_mouse(event, state):
 
             start = state.insert_start
 
+            if x<start.x:
+                print("ERROR: SEGMENT DOES NOT GO FROM LEFT TO RIGHT")
+                state.insert_start = None
+                return 
             x1 = min(start.x, x)
             x2 = max(start.x, x)
 
@@ -229,6 +233,7 @@ def handle_mouse(event, state):
         else:
 
             second = geometry.Point(x, y)
+           
 
             xmin = min(state.first_click.x, second.x)
             xmax = max(state.first_click.x, second.x)
@@ -253,6 +258,7 @@ def handle_mouse(event, state):
         else:
 
             second = geometry.Point(x, y)
+           
 
             xmin = min(state.first_click.x, second.x)
             xmax = max(state.first_click.x, second.x)
