@@ -15,7 +15,7 @@ def read_file(file_path):
         error_mode: True if there was an error in the input file, False otherwise
     """
     with open(file_path, "r", encoding="utf-8") as file:
-        init_segments = []
+        SegmentArray = []
         init_reports = []
         init_queries = []
         for line in file:
@@ -30,20 +30,20 @@ def read_file(file_path):
                 x_min = min(x1, x2)
                 x_max = max(x1, x2)
                 if x1 < 0 or x2 < 0 or y < 0 or x1 > boundary or x2 > boundary or y > boundary:
-                    return h, init_segments, init_reports, init_queries, True
-                init_segments.append(Segment(x_min, x_max, y))
+                    return h, SegmentArray, init_reports, init_queries, True
+                SegmentArray.append(Segment(x_min, x_max, y))
             elif split_line[0] == "r":
                 x1, y1, x2, y2 = int(split_line[1]), int(split_line[2]), int(split_line[3]), int(split_line[4])
                 if x1 < 0 or x2 < 0 or y1 < 0 or y2 < 0 or x1 > boundary or x2 > boundary or y1 > boundary or y2 > boundary:
-                    return h, init_segments, init_reports, init_queries, True
+                    return h, SegmentArray, init_reports, init_queries, True
                 init_reports.append(Rectangle(x1,x2,y1,y2))
             elif split_line[0] == "q":
                 x1, y1, x2, y2 = int(split_line[1]), int(split_line[2]), int(split_line[3]), int(split_line[4])
                 if x1 < 0 or x2 < 0 or y1 < 0 or y2 < 0 or x1 > boundary or x2 > boundary or y1 > boundary or y2 > boundary:
-                    return h, init_segments, init_reports, init_queries, True
+                    return h, SegmentArray, init_reports, init_queries, True
                 init_queries.append(Rectangle(x1,x2,y1,y2))
     print(f"h = {h}")
-    return h, init_segments, init_reports, init_queries, False
+    return h, SegmentArray, init_reports, init_queries, False
 
 
 def log_command(line):

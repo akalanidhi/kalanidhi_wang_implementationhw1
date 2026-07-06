@@ -26,7 +26,7 @@ class quadTree:
         self.segment_count = 0                  #total number of segments in the quadtree
         self.anim = anim
 
-    def insert(self, segment):
+    def InsertSegment(self, segment):
         """
         inserts a segment into quadtree.
         if node is not provided, insertion starts at the root.

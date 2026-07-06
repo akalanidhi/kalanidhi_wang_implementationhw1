@@ -52,8 +52,12 @@ class GameState:
 
 
 def load_data(state):
+    """
+    loads data from "input.txt"
+    sets initial h, as well as S
+    """
 
-    h, initial_segments, initial_reports, initial_queries, error = parser.read_file("input.txt")
+    h, SegmentArray, initial_reports, initial_queries, error = parser.read_file("input.txt")
 
     state.h = h
     state.initial_reports = initial_reports
@@ -76,8 +80,8 @@ def load_data(state):
     state.tree = quadtree.quadTree(boundary, anim=state.anim)
 
     # Insert all segments from file
-    for segment in initial_segments:
-        state.tree.insert(segment)
+    for segment in SegmentArray:
+        state.tree.InsertSegment(segment)
     state.tree.build_endpoint_counts()
 
 def process_initial_commands(state):
@@ -143,7 +147,7 @@ def handle_mouse(event, state):
 
             segment = geometry.Segment( x1, x2, start.y)
 
-            state.tree.insert(segment)
+            state.tree.InsertSegment(segment)
             state.tree.build_endpoint_counts()
 
             print(f"Inserted segment ({x1}, {x2}, {start.y})")
