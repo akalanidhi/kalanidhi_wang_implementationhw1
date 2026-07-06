@@ -99,6 +99,7 @@ def handle_keyboard(event, state):
         mode = Mode.INSERT
         print("Switched to INSERT mode.")
         state.mode = Mode.INSERT
+        reset_query_state(state)
     if event.key == pygame.K_r:
         mode = Mode.REPORT
         print("Switched to REPORT mode.")
@@ -111,6 +112,7 @@ def handle_keyboard(event, state):
         state.mode = Mode.NORMAL
         print("Switched to NORMAL mode")
         mode = Mode.NORMAL
+        reset_query_state(state)
     if event.key == pygame.K_a:
         state.anim.toggle_animation()
    
@@ -237,6 +239,10 @@ def draw(state):
 
     pygame.display.flip()
 
+def reset_query_state(state):
+    state.query_rect = None
+    state.first_click = None
+    state.insert_start = None
 
 def update(state):
     state.anim.update() 
