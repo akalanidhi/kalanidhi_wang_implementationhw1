@@ -1,7 +1,8 @@
 Anjali Kalanidhi and Sisi Wang
 Welcome to our quadtree implementation!
 
-This code requires the pygame library to be installed for visualization purposes.
+This code requires the pygame library to be installed for visualization purposes. 
+The code also uses conda for a virtual environment.
 
 When inputting inital coordinates, please alter the input.txt file to do so. PUT SPACES IN BETWEEN ALL VALUES
 To insert a segment, create a new line, type "i", and then your x1, x2, and y coordinates with SPACES in between everything
