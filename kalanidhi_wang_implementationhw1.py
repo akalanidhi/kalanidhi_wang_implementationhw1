@@ -9,6 +9,7 @@ import visualization
 import quadtree
 import geometry
 import animation 
+from button import Button
 
 
 WHITE = (255, 255, 255)
@@ -83,6 +84,30 @@ def load_data(state):
     boundary = geometry.Rectangle(0,2 ** h,0,2 ** h)
 
     state.tree = quadtree.quadTree(boundary, anim=state.anim)
+
+    def set_insert():
+        state.mode = Mode.INSERT
+        print("INSERT mode")
+
+    def set_report():
+        state.mode = Mode.REPORT
+        print("REPORT mode")
+
+    def set_count():
+        state.mode = Mode.COUNT
+        print("COUNT mode")
+
+    def toggle_anim():
+        state.anim.toggle_animation()
+        print("Animation toggled")
+
+    state.buttons = [
+        Button(10, 10, 120, 35, "INSERT", set_insert),
+        Button(140, 10, 120, 35, "REPORT", set_report),
+        Button(270, 10, 120, 35, "COUNT", set_count),
+        Button(400, 10, 160, 35, "TOGGLE ANIM", toggle_anim)
+    ]
+
 
     # Insert all segments from file
     for segment in SegmentArray:
@@ -272,6 +297,9 @@ def draw(state):
             nodes=state.tree.count_nodes(),
             segments=state.tree.count_segments()
         )
+    
+    for button in state.buttons:
+        button.draw(screen)
 
     pygame.display.flip()
 
@@ -313,8 +341,11 @@ def game_loop(state):
             if event.type == pygame.QUIT:
 
                 state.running = False
+            
+            for button in state.buttons:
+                button.handle_event(event)
 
-            elif event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN:
 
                 handle_keyboard(event, state)
 
