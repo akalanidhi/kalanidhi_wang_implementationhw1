@@ -113,16 +113,16 @@ def load_data(state):
 
     y = state.world_size + 5
     btn_w = 120
-    btn_h = 30
+    btn_h = 25
     gap = 10
     x_start = 20
 
     state.buttons = [
-    Button(x_start, y, btn_w, btn_h, "INSERT", set_insert),
-    Button(x_start + (btn_w + gap), y, btn_w, btn_h, "REPORT", set_report),
-    Button(x_start + 2 * (btn_w + gap), y, btn_w, btn_h, "COUNT", set_count),
-    Button(x_start + 3 * (btn_w + gap), y, btn_w, btn_h, "ANIMATION", toggle_anim),
-]
+        Button(x_start, y, btn_w, btn_h, "INSERT", set_insert),
+        Button(x_start + (btn_w + gap), y, btn_w, btn_h, "REPORT", set_report),
+        Button(x_start + 2 * (btn_w + gap), y, btn_w, btn_h, "COUNT", set_count),
+        Button(x_start + 3 * (btn_w + gap), y, btn_w, btn_h, "ANIMATION", toggle_anim),
+    ]
 
     # Insert all segments from file
     for segment in SegmentArray:
@@ -320,17 +320,21 @@ def draw(state):
                 color=(255, 0, 0)
             )
 
+        status_y = state.world_size
+        button_area_height = 35
+        status_text_area_y = state.world_size + button_area_height
+
         pygame.draw.rect(
             screen,
-            (245, 245, 245),
+            (230, 230, 230),
             (0, state.world_size, state.world_size, state.status_height)
         )
 
         pygame.draw.line(
             screen,
             (0, 0, 0),
-            (0, state.world_size),
-            (state.world_size, state.world_size),
+            (0, status_y),
+            (state.world_size, status_y),
             2
         )
 
