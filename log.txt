@@ -19,21 +19,18 @@ reporting segment 3 whose coordinates are 200 100 300. It intersects the query r
 A quadrant with LL=(257, 0) and UR=(512, 256) was called
 A quadrant with LL=(0, 0) and UR=(512, 512) was called
 A quadrant with LL=(0, 257) and UR=(256, 512) was called
-A quadrant with LL=(0, 0) and UR=(512, 512) was called
-A quadrant with LL=(0, 257) and UR=(256, 512) was called
-A quadrant with LL=(0, 0) and UR=(512, 512) was called
-A quadrant with LL=(0, 257) and UR=(256, 512) was called
-A quadrant with LL=(0, 385) and UR=(128, 512) was called
-A quadrant with LL=(0, 0) and UR=(512, 512) was called
-A quadrant with LL=(0, 257) and UR=(256, 512) was called
-A quadrant with LL=(0, 385) and UR=(128, 512) was called
-A quadrant with LL=(129, 385) and UR=(256, 512) was called
-A quadrant with LL=(0, 0) and UR=(512, 512) was called
-A quadrant with LL=(0, 257) and UR=(256, 512) was called
-A quadrant with LL=(0, 385) and UR=(128, 512) was called
-A quadrant with LL=(0, 0) and UR=(512, 512) was called
-A quadrant with LL=(0, 257) and UR=(256, 512) was called
-A quadrant with LL=(0, 385) and UR=(128, 512) was called
-A quadrant with LL=(0, 385) and UR=(64, 448) was called
-A quadrant with LL=(65, 385) and UR=(128, 448) was called
-A quadrant with LL=(65, 417) and UR=(96, 448) was called
+A quadrant with LL=(257, 257) and UR=(512, 512) was called
+A quadrant with LL=(0, 0) and UR=(256, 256) was called
+A quadrant with LL=(257, 0) and UR=(512, 256) was called
+RangeCounting was called with parameters 166 17 377 27. We found 0 endpoints of segments inside the query region.
+RangeCounting was called with parameters 287 30 445 41. We found 1 endpoints of segments inside the query region.
+RangeReporting was called with parameters 146, 23, 230, 27.
+RangeReporting was called with parameters 224, 19, 226, 115.
+reporting segment 0 whose coordinates are 20 40 300. It intersects the query region 224 19 226 115
+reporting segment 3 whose coordinates are 200 100 300. It intersects the query region 224 19 226 115
+RangeReporting was called with parameters 282, 73, 302, 89.
+RangeReporting was called with parameters 173, 107, 294, 120.
+RangeReporting was called with parameters 178, 38, 221, 107.
+reporting segment 0 whose coordinates are 20 40 300. It intersects the query region 178 38 221 107
+reporting segment 3 whose coordinates are 200 100 300. It intersects the query region 178 38 221 107
+RangeCounting was called with parameters 258 32 320 37. We found 0 endpoints of segments inside the query region.

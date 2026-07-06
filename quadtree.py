@@ -297,9 +297,17 @@ class quadTree:
         return total
 
     def count_nodes(self):
+        """Externally accessed count_nodes function. Used for debugging and counts how many total branches are beneath a node
+        Returns: integer representing the number of nodes including and beneath the root
+        """
         return self._count_nodes(self.root)
 
     def _count_nodes(self, node):
+        """Internal function that recursively calculates how many nodes are beneath a node.
+        Args: 
+        node: node to calculate how many nodes branch beneath
+        
+        Returns: total (int), representing how many total nodes are beneath the root, which is passed in from count_nodes"""
 
         if node is None:
             return 0
@@ -312,9 +320,18 @@ class quadTree:
         return total
 
     def draw(self, screen):
+        """externally accessed function that draws all the segments on the screen
+        args: 
+        screen: pygame screen to be drawn on"""
         self._draw(screen, self.root)
     
     def _draw(self, screen, node):
+        """internal function that draws all segments on the pygame screen passsed in
+        
+        Args: 
+        Screen: Pygame screen
+        Node: all segments under this node should be drawn.
+        """
 
         if node is None:
             return
@@ -331,6 +348,9 @@ class quadTree:
 
 
     def find(self, point):
+        """External function that allows you to find where a point is in the quadtree
+        Args:
+        point: point to be found within the quadtree"""
         return self._find(self.root, point)
 
     def _find(self, node, point):
