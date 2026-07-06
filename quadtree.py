@@ -149,6 +149,9 @@ class quadTree:
         return total
 
     def split(self, node):
+        """Splits a node into four smaller leaves when too many segments are within it. Uses the create_child function to do so
+        Args: node to be split
+        """
 
         old_segments = node.segments
         node.segments = []
@@ -167,6 +170,12 @@ class quadTree:
                     child.segments.append(seg)                
 
     def range_report(self, rectangle, log_path="log.txt"):
+        """Helper function that is accessible by other files to find how many segments exist within a rectangle.
+        Everytime it is called, it writes to log.txt
+        Args: 
+        rectangle: query region
+        
+        Returns: list of segments within query region"""
         results = set()
 
         x1, y1, x2, y2 = rectangle.x_min, rectangle.y_min, rectangle.x_max, rectangle.y_max
@@ -178,6 +187,15 @@ class quadTree:
         return results
     
     def _range_report(self, node, rectangle, results, log_file):
+        """Helper function that finds the actual segments within the query region
+        
+        Args:
+        node: root of tree to be searched
+        rectangle: query region
+        results: an empty set the segments within the query region can be added to, ensures no double counting
+        log_file: title for file being written to, "log.txt" 
+        
+        """
 
         if node is None:
             return
@@ -209,6 +227,14 @@ class quadTree:
                 self._range_report(child, rectangle, results, log_file)
 
     def range_count(self, rectangle, log_path="log.txt"):
+        """Helper function that is accessible by other files to trigger counting how many endpoints are within a query region
+        
+        Args: 
+        rectangle: representing query region
+        
+        Returns: 
+        count (int): represents how many endpoints were found in the region
+        """
         seen = set()
         count = self._range_count(self.root, rectangle, seen)
 
@@ -223,6 +249,14 @@ class quadTree:
         return count
     
     def _range_count(self, node, rectangle, seen):
+        """Internal function that counts how many endpoints are within the query rectangle
+        Args:
+        Node: root of tree to be searched
+        Rectangle: query region
+        Seen: set of endpoints to prevent double counting
+        
+        Returns: 
+        total (int): total number of endpoints within query region"""
         if node is None:
             return 0
 
