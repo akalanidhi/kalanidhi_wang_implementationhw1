@@ -248,7 +248,6 @@ def handle_mouse(event, state):
             ymax = max(state.first_click.y, second.y)
             if xmin != state.first_click.x or ymin == state.first_click.y:
                 print("ERROR: RECTANGLE DOES NOT GO FROM BOTTOM LEFT TO TOP RIGHT")
-                print(f"{xmin},{ymin},{xmax},{ymax}")
                 state.first_click = None
                 return
 
