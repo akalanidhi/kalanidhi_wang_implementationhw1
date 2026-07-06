@@ -12,4 +12,6 @@ Press "i" or the insert button to enter insert mode
 
 Press "r" or the report button to enter report mode
 
+Press "q" or the count button to enter count mode
 
+Press "esc" on your keyboard to return to normal mode
