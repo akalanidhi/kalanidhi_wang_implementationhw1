@@ -53,7 +53,7 @@ class GameState:
 
         self.world_size = 0
         self.toolbox_width = 220
-        self.status_height = 40
+        self.status_height = 65
         self.button_area_height = 0  # NEW
 
 
