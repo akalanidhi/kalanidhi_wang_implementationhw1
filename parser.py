@@ -42,7 +42,6 @@ def read_file(file_path):
                 if x1 < 0 or x2 < 0 or y1 < 0 or y2 < 0 or x1 > boundary or x2 > boundary or y1 > boundary or y2 > boundary:
                     return h, SegmentArray, init_reports, init_queries, True
                 init_queries.append(Rectangle(x1,x2,y1,y2))
-    print(f"h = {h}")
     return h, SegmentArray, init_reports, init_queries, False
 
 
