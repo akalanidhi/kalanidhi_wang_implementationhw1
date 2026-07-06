@@ -30,6 +30,8 @@ class GameState:
         # animation starts ON
         self.anim = animation.AnimationManager(log_file_path="log.txt")
 
+        self.buttons = []
+
         self.running = True
 
         self.screen = None

@@ -26,6 +26,13 @@ class quadTree:
         self.segment_count = 0                  #total number of segments in the quadtree
         self.anim = anim
 
+    def create_child(self, node, index):
+        return quadNode(
+        node.boundary.get_quad(index),
+        node.level + 1,
+        node.anim
+    )
+
     def InsertSegment(self, segment):
         """
         inserts a segment into quadtree.
@@ -121,22 +128,21 @@ class quadTree:
 
     def split(self, node):
 
-        node.children = [
-            quadNode(node.boundary.get_quad(0), node.level + 1, self.anim),
-            quadNode(node.boundary.get_quad(1), node.level + 1, self.anim),
-            quadNode(node.boundary.get_quad(2), node.level + 1, self.anim),
-            quadNode(node.boundary.get_quad(3), node.level + 1, self.anim)
-        ]
-
-        node.is_leaf = False
-
         old_segments = node.segments
         node.segments = []
+        node.is_leaf = False
 
+        node.children = []
+
+        for i in range(4):
+            child = self.create_child(node, i)
+            node.children.append(child)
+
+        # push segments into correct children
         for seg in old_segments:
             for child in node.children:
                 if child.boundary.int_segment(seg):
-                    self._insert(child, seg)
+                    child.segments.append(seg)                
 
     def range_report(self, rectangle, log_path="log.txt"):
         results = set()

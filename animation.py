@@ -6,7 +6,7 @@ HIGHLIGHT_FRAMES = 1000
 HIGHLIGHT_COLOR = (255, 215, 0) #highlighting color for quads
 
 HIGHLIGHT_COLOR = (255, 215, 0)
-SEGMENT_HIGHLIGHT_COLOR = (255, 0, 0)          # highlighting color for segments
+SEGMENT_HIGHLIGHT_COLOR = (255, 0, 0)          # ighlighting color for segments
 SEGMENT_HIGHLIGHT_WIDTH = 4                     #thicker line so a segment is easy to spot
 
 
