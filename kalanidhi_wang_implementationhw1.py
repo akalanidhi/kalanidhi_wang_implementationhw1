@@ -78,6 +78,7 @@ def load_data(state):
     # Insert all segments from file
     for segment in initial_segments:
         state.tree.insert(segment)
+    state.tree.build_endpoint_counts()
 
 def process_initial_commands(state):
     print("Initial reports")
@@ -141,6 +142,7 @@ def handle_mouse(event, state):
             segment = geometry.Segment( x1, x2, start.y)
 
             state.tree.insert(segment)
+            state.tree.build_endpoint_counts()
 
             print(f"Inserted segment ({x1}, {x2}, {start.y})")
 

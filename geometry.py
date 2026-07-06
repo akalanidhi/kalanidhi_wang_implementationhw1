@@ -129,14 +129,16 @@ class Rectangle:
         """
         mid_x = (self.x_min + self.x_max) // 2
         mid_y = (self.y_min + self.y_max) // 2
-        if index == 0:  # top-left (NW)
-            return Rectangle(self.x_min, mid_x, mid_y, self.y_max)
-        elif index == 1:  # top-right (NE)
-            return Rectangle(mid_x, self.x_max, mid_y, self.y_max)
-        elif index == 2:  # bottom-left (SW)
+        if index == 0:
+            return Rectangle(self.x_min, mid_x, mid_y + 1, self.y_max)
+        elif index == 1:
+            return Rectangle(mid_x + 1, self.x_max, mid_y + 1, self.y_max)
+
+        elif index == 2:
             return Rectangle(self.x_min, mid_x, self.y_min, mid_y)
-        elif index == 3:  # bottom-right (SE)
-            return Rectangle(mid_x, self.x_max, self.y_min, mid_y)
+
+        elif index == 3:
+            return Rectangle(mid_x + 1, self.x_max, self.y_min, mid_y)
         else:
             raise ValueError("index must be in range [0-3]")
 

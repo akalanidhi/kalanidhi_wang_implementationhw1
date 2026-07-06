@@ -51,7 +51,7 @@ class quadTree:
         # Segment does not intersect this node's region
         if not node.boundary.int_segment(segment):
             return
-
+        """
         # Update endpoint count for this node
         left = Point(segment.x1, segment.y)
         right = Point(segment.x2, segment.y)
@@ -61,7 +61,7 @@ class quadTree:
 
         if node.boundary.cont_point(right):
             node.endpoint_count += 1
-
+        """
         if node.is_leaf:
 
             # Leaf has room
@@ -71,11 +71,52 @@ class quadTree:
 
             # Leaf is full -> split it
             self.split(node)
+        children_hit = []
+
+        for i, child in enumerate(node.children):
+            if child.boundary.int_segment(segment):
+                children_hit.append(i)
+
+        print(
+            segment.x1,
+            segment.x2,
+            segment.y,
+            "hits children",
+            children_hit,
+            "at level",
+            node.level,
+        )
 
         for child in node.children:
 
             if child.boundary.int_segment(segment):
                 self._insert(child, segment)
+
+    def build_endpoint_counts(self):
+        self._build_endpoint_counts(self.root)
+
+    def _build_endpoint_counts(self, node):
+        if node is None:
+            return 0
+
+        if node.is_leaf:
+            total = 0
+            for seg in node.segments:
+                if node.boundary.cont_point(Point(seg.x1, seg.y)):
+                    total += 1
+                if node.boundary.cont_point(Point(seg.x2, seg.y)):
+                    total += 1
+            node.endpoint_count = total
+            return total
+
+        total = 0
+
+        for child in node.children:
+            total += self._build_endpoint_counts(child)
+
+        node.endpoint_count = total
+
+        return total
 
     def split(self, node):
 
@@ -263,3 +304,45 @@ class quadTree:
 
     def count_segments(self):
         return self.segment_count
+    
+    def check_duplicates(self):
+        counts = {}
+
+        def dfs(node):
+            if node is None:
+                return
+
+            for seg in node.segments:
+                key = (seg.x1, seg.x2, seg.y)
+                counts[key] = counts.get(key, 0) + 1
+
+            for child in node.children:
+                dfs(child)
+
+        dfs(self.root)
+
+        for seg, c in counts.items():
+            print(seg, c)
+
+    def print_segment_locations(self):
+        self._print_segment_locations(self.root)
+
+    def _print_segment_locations(self, node):
+        if node is None:
+            return
+
+        if node.is_leaf:
+            for seg in node.segments:
+                print(
+                    id(seg),
+                    seg.x1, seg.x2, seg.y,
+                    "leaf:",
+                    node.boundary.x_min,
+                    node.boundary.x_max,
+                    node.boundary.y_min,
+                    node.boundary.y_max,
+                )
+
+        else:
+            for child in node.children:
+                self._print_segment_locations(child)
