@@ -27,6 +27,7 @@ class quadTree:
         self.max_segments = 3            #maximum segments a node can hold before splitting
         self.segment_count = 0                  #total number of segments in the quadtree
         self.anim = anim
+        self.seen_segments = set()
 
     def create_child(self, node, index):
         """
@@ -54,7 +55,15 @@ class quadTree:
         Args: segment to be inserted
 
         """
+        key = (segment.x1,segment.x2,segment.y)
+
+        if key in self.seen_segments:
+            print("ERROR: DUPLICATE SEGMENT")
+            return
+        
+        self.seen_segments.add(key)
         self.segment_count += 1
+        print(f"Inserted segment: ({segment.x1},{segment.x2},{segment.y})")
         self._insert(self.root, segment)
 
     def _insert(self, node, segment):

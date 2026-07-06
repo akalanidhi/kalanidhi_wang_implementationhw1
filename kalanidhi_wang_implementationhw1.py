@@ -227,7 +227,6 @@ def handle_mouse(event, state):
             state.tree.InsertSegment(segment)
             state.tree.build_endpoint_counts()
 
-            print(f"Inserted segment ({x1}, {x2}, {start.y})")
 
             state.insert_start = None
 
