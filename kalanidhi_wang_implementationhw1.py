@@ -51,6 +51,10 @@ class GameState:
         self.initial_reports = []
         self.initial_queries = []
 
+        self.world_size = 0
+        self.toolbox_width = 220
+        self.status_height = 40
+
 
 
 
