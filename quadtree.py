@@ -7,6 +7,7 @@ class quadNode:
     if the number of segments exceeds max_segments, the node splits into 4 quadrants.
     """
     def __init__(self, boundary, level=0, anim = None):
+        """Intializes the a new quad node."""
         self.boundary = boundary  #rectangle object defining the node's region
         self.segments = []        #list of segments contained in this node
         self.children = [None] * 4  #list of 4 child nodes (NW, NE, SW, SE)
@@ -21,12 +22,23 @@ class quadTree:
     manages insertion of segments, querying, and visualization.
     """
     def __init__(self, boundary, anim=None):
+        """Initializes the whole quad tree with a root node created"""
         self.root = quadNode(boundary, anim=anim)   #root node of the quadtree
         self.max_segments = 3            #maximum segments a node can hold before splitting
         self.segment_count = 0                  #total number of segments in the quadtree
         self.anim = anim
 
     def create_child(self, node, index):
+        """
+        Creates a child with the proper boundaries (a fourth of what the current node is), one level below the current node,
+        and with the same animation settings
+        Args: 
+        node: the current node who will get a child
+        index: the location of the new child, 0 = top-left (NW), 1 = top-right (NE), 2 = bottom-left (SW), 3 = bottom-right (SE).
+
+        Returns:
+        quadNode representing this new child
+        """
         return quadNode(
         node.boundary.get_quad(index),
         node.level + 1,
@@ -38,6 +50,8 @@ class quadTree:
         inserts a segment into quadtree.
         if node is not provided, insertion starts at the root.
         recursion is handled inside this function.
+
+        Args: segment to be inserted
 
         """
         self.segment_count += 1
@@ -90,9 +104,17 @@ class quadTree:
                 self._insert(child, segment)
 
     def build_endpoint_counts(self):
+        """Helper function to count endpoints. 
+        Calls _build_endpoint_counts to do the work of counting the number of endpoints"""
         self._build_endpoint_counts(self.root)
 
     def _build_endpoint_counts(self, node):
+        """Counts endpoints, to be used everytime a new segment is inserted. Counts number of endpoints stored in a node
+        args:
+        node: node to count how many endpoints exist within
+        
+        returns:
+        total: total number of endpoints within node"""
         if node is None:
             return 0
 
