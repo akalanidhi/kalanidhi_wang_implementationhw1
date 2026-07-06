@@ -142,10 +142,8 @@ class quadTree:
 
         x1, y1, x2, y2 = rectangle.x_min, rectangle.y_min, rectangle.x_max, rectangle.y_max
 
-        with open(log_path, "a") as log_file:
-            log_file.write(
-            f"RangeReporting was called with parameters {x1}, {y1}, {x2}, {y2}.\n"
-        )
+        with open('log.txt', "a") as log_file:
+            log_file.write(f"RangeReporting was called with parameters {x1}, {y1}, {x2}, {y2}.\n")
         self._range_report(self.root, rectangle, results, log_file) #printing the log file is handled in the recursive function
 
         return results
@@ -170,12 +168,11 @@ class quadTree:
 
                     if self.anim:              
                         self.anim.highlight_segment(seg)
-
-                    log_file.write(
+                    with open ('log.txt', 'a') as log_file:
+                        log_file.write(
                         f"reporting segment {seg.name} whose coordinates are "
                         f"{seg.x1} {seg.y} {seg.x2}. It intersects the query region "
-                        f"{x1} {y1} {x2} {y2}\n"
-                )
+                        f"{x1} {y1} {x2} {y2}\n")
 
         if not node.is_leaf:
 
@@ -188,7 +185,7 @@ class quadTree:
 
         x1, y1, x2, y2 = rectangle.x_min, rectangle.y_min, rectangle.x_max, rectangle.y_max
 
-        with open(log_path, "a") as log_file:
+        with open('log.txt', "a") as log_file:
             log_file.write(
             f"RangeCounting was called with parameters {x1} {y1} {x2} {y2}. "
             f"We found {count} endpoints of segments inside the query region.\n"

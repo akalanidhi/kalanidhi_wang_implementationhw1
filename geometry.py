@@ -41,6 +41,8 @@ class Segment:
         self.x1 = x1
         self.x2 = x2
         self.y = y
+        self.name = Segment._counter
+        Segment._counter += 1
 
     def cont_point(self, point):
         """
